@@ -7,8 +7,8 @@ function Skills() {
     {
       title: "Frontend",
       skills: [
-        { name: "HTML5", level: 90 },
-        { name: "CSS3", level: 85 },
+        { name: "HTML", level: 90 },
+        { name: "CSS", level: 85 },
         { name: "JavaScript", level: 50 },
         { name: "React", level: 50 },
         { name: "Tailwind CSS", level: 80 },
@@ -107,18 +107,24 @@ function Skills() {
             Additional Tools
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
-            {["Git", "GitHub", "Figma", "Postman", "VS Code", "Vite"].map(
-              (tech, index) => (
-                <span
-                  key={index}
-                  className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 
+            {[
+              "Git",
+              "GitHub",
+              "Figma",
+              "Postman",
+              "VS Code",
+              "Vite",
+              "Ngrok",
+            ].map((tech, index) => (
+              <span
+                key={index}
+                className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 
                           rounded-full border border-gray-200 dark:border-gray-700 shadow-sm
                           transition-all hover:transform hover:scale-105 hover:border-blue-400 dark:hover:border-blue-500"
-                >
-                  {tech}
-                </span>
-              )
-            )}
+              >
+                {tech}
+              </span>
+            ))}
           </div>
         </div>
       </div>

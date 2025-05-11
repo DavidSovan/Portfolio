@@ -93,13 +93,7 @@ function Projects() {
                   {project.description}
                 </p>
 
-                <div className="flex justify-between mt-4">
-                  <a
-                    href={project.demoLink}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                  >
-                    Live Demo
-                  </a>
+                <div className="flex justify-center mt-4">
                   <a
                     href={project.codeLink}
                     className="px-4 py-2 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"
