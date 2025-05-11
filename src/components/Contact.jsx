@@ -74,19 +74,19 @@ function Contact() {
               </h4>
               <div className="flex space-x-4">
                 <a
-                  href="#"
+                  href="https://github.com/DavidSovan"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
                 >
                   <i className="fab fa-github"></i>
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/in/%E1%9E%9F%E1%9E%BB%E1%9E%9C%E1%9E%8E%E1%9F%92%E1%9E%8E-%E1%9E%8A%E1%9F%81%E1%9E%9C%E1%9E%B8%E1%9E%8F-834a07324"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
                 >
                   <i className="fab fa-linkedin-in"></i>
                 </a>
                 <a
-                  href="#"
+                  href="mailto:sovandavid19@gmail.com"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
                 >
                   <i className="fas fa-envelope"></i>

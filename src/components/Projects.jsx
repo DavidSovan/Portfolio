@@ -14,7 +14,7 @@ function Projects() {
       image: projectImage,
       tags: ["React", "Tailwind CSS", "Responsive Design"],
       demoLink: "#",
-      codeLink: "#",
+      codeLink: "https://github.com/DavidSovan/Portfolio",
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ function Projects() {
       image: projectImage1,
       tags: ["Flutter", "PHP", "MySQL"],
       demoLink: "#",
-      codeLink: "#",
+      codeLink: "https://github.com/DavidSovan/Task-Manager-App",
     },
     {
       id: 3,
