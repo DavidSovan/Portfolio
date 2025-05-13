@@ -1,6 +1,8 @@
 import { useState } from "react";
 import projectImage from "../assets/Projects/Portfolio.png";
 import projectImage1 from "../assets/Projects/TaskApp.jpg";
+import projectImage2 from "../assets/Projects/Flutter_Ecom_UI.png";
+import projectImage3 from "../assets/Projects/Project1.png";
 
 function Projects() {
   const [activeProject, setActiveProject] = useState(null);
@@ -18,11 +20,11 @@ function Projects() {
     },
     {
       id: 2,
-      title: "Task Manager App",
+      title: "Task Manager App (Frontend + Backend)",
       description:
         "The Task Manager App is a cross-platform mobile application designed to help users organize, track, and manage their daily tasks efficiently. The frontend is developed using Flutter, providing a responsive and smooth user interface. The backend is powered by PHP, with a MySQL database handling task storage, user data, and application logic.",
       image: projectImage1,
-      tags: ["Flutter", "PHP", "MySQL"],
+      tags: ["Flutter", "Dart", "PHP", "MySQL"],
       demoLink: "#",
       codeLink: "https://github.com/DavidSovan/Task-Manager-App",
     },
@@ -31,10 +33,20 @@ function Projects() {
       title: "Static E-commerce App",
       description:
         "A static e-commerce app built with flutter , featuring product listings and a shopping cart.",
-      image: projectImage,
+      image: projectImage2,
       tags: ["Dart", "Flutter"],
       demoLink: "#",
-      codeLink: "#",
+      codeLink: "https://github.com/DavidSovan/Static-Ecommerce-app",
+    },
+    {
+      id: 4,
+      title: "E-commerce UI Design",
+      description:
+        "E-commerce UI design built with Html and CSS for a responsive and modern shopping experience.",
+      image: projectImage3,
+      tags: ["HTML", "CSS", "Responsive Design"],
+      demoLink: "#",
+      codeLink: "https://github.com/DavidSovan/E-commerce_UI",
     },
   ];
 
