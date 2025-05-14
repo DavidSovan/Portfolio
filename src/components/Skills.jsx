@@ -12,17 +12,17 @@ function Skills() {
         { name: "JavaScript", level: 50 },
         { name: "React", level: 50 },
         { name: "Tailwind CSS", level: 80 },
-        { name: "Dart", level: 70 },
-        { name: "Flutter", level: 70 },
+        { name: "Dart", level: 75 },
+        { name: "Flutter", level: 75 },
       ],
     },
     {
       title: "Backend",
       skills: [
-        { name: "PHP", level: 60 },
+        { name: "PHP", level: 50 },
         { name: "Laravel", level: 50 },
-        { name: "MySQL", level: 85 },
-        { name: "Firebase", level: 80 },
+        { name: "MySQL", level: 60 },
+        { name: "Firebase", level: 50 },
       ],
     },
   ];
