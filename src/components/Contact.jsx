@@ -91,6 +91,12 @@ function Contact() {
                 >
                   <i className="fas fa-envelope"></i>
                 </a>
+                <a
+                  href="https://t.me/Sovandavid"
+                  className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
+                >
+                  <i className="fab fa-telegram-plane"></i>
+                </a>
               </div>
             </div>
           </div>

@@ -3,6 +3,9 @@ import projectImage from "../assets/Projects/Portfolio.png";
 import projectImage1 from "../assets/Projects/TaskApp.jpg";
 import projectImage2 from "../assets/Projects/Flutter_Ecom_UI.png";
 import projectImage3 from "../assets/Projects/Project1.png";
+import projectImage4 from "../assets/Projects/chat_app.png";
+import projectImage5 from "../assets/Projects/cineverse.png";
+import projectImage6 from "../assets/Projects/uber_taxi.png";
 
 function Projects() {
   const [activeProject, setActiveProject] = useState(null);
@@ -47,6 +50,36 @@ function Projects() {
       tags: ["HTML", "CSS", "Responsive Design"],
       demoLink: "#",
       codeLink: "https://github.com/DavidSovan/E-commerce_UI",
+    },
+    {
+      id: 5,
+      title: "Talky-Chat App",
+      description:
+        "Developed a cross-platform chat app using Flutter and Firebase, featuring user authentication, private messaging, and a global chat room. Utilized Cloud Firestore for real-time data sync and ensured responsive UI across Android and iOS platforms.",
+      image: projectImage4,
+      tags: ["Dart", "Flutter", "Firebase"],
+      demoLink: "#",
+      codeLink: "https://github.com/DavidSovan/Talky-Chat-App-",
+    },
+    {
+      id: 6,
+      title: "Cineverse-Movie App",
+      description:
+        "Built a cross-platform Flutter app integrated with the TMDB API to display popular, upcoming, and genre-based movies. Included search functionality and detailed movie views with trailers, ratings, and descriptions.",
+      image: projectImage5,
+      tags: ["Dart", "Flutter", "API Integration"],
+      demoLink: "#",
+      codeLink: "https://github.com/DavidSovan/Cineverse-movie-app-",
+    },
+    {
+      id: 7,
+      title: "Uber Taxi App",
+      description:
+        "Built a full-stack Flutter & Laravel app with role-based access for customers and drivers. Implemented RESTful APIs, user authentication, and separate dashboards for booking rides and managing vehicles.",
+      image: projectImage6,
+      tags: ["Dart", "Flutter", "Laravel", "API Integration", "MySQL"],
+      demoLink: "#",
+      codeLink: "https://github.com/DavidSovan/Uber-App",
     },
   ];
 
