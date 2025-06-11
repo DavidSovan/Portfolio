@@ -47,7 +47,7 @@ function Contact() {
                     Phone
                   </h4>
                   <p className="text-gray-600 dark:text-gray-400">
-                    (855) 963-853
+                    (855) 87-963-853
                   </p>
                 </div>
               </div>

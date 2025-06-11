@@ -41,13 +41,15 @@ function Home() {
         </h1>
 
         <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-6">
-          Frontend Developer | Lifelong Learner
+          Flutter | Lifelong Learner
         </p>
 
         <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
-          A Frontend Developer who enjoys creating clean, responsive, and
-          user-friendly experiences. I love learning new things and growing my
-          skills.
+          A Flutter Learner passionate about building clean, responsive, and
+          user-friendly applications. Continuously learning and always eager to
+          grow my skills and stay updated with the latest technologies. I enjoy
+          building mobile apps using Flutter, focusing on clean design and
+          smooth user experiences.
         </p>
 
         {/* CTA buttons */}

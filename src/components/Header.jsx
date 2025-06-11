@@ -86,7 +86,7 @@ function Header() {
       {/* Resume Download Button */}
       <div className="hidden md:block">
         <a
-          href="/Resume.pdf"
+          href="/CV.pdf"
           className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium hover:from-blue-600 hover:to-purple-600 transition-colors"
         >
           Download CV
@@ -146,7 +146,7 @@ function Header() {
 
         {/* Mobile CV Download Button */}
         <a
-          href="/Resume.pdf"
+          href="/CV.pdf"
           onClick={() => setIsOpen(false)}
           className="px-6 py-3 border-t border-gray-700 text-blue-400 hover:bg-gray-700 transition-colors"
         >
