@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import profileImage from "../assets/mainProfile.jpg";
+import profileImage from "../assets/Profile.jpg";
 
 function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,7 +26,7 @@ function Home() {
       >
         {/* Profile image */}
         <div className="mb-8 flex justify-center">
-          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg">
+          <div className="w-60 h-60 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-lg">
             <img
               src={profileImage}
               alt="Profile"
@@ -37,7 +37,7 @@ function Home() {
 
         {/* Main content */}
         <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Hello, I'm [Sovan David]
+          Hello, I'm Sovan David
         </h1>
 
         <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-6">
