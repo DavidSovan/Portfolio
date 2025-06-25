@@ -23,6 +23,7 @@ function Skills() {
         { name: "Laravel", level: 50 },
         { name: "MySQL", level: 60 },
         { name: "Firebase", level: 50 },
+        { name: "Python", level: 50 },
       ],
     },
   ];
@@ -38,7 +39,7 @@ function Skills() {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, []);
+  });
 
   // Check if a skill should be animated
   const isAnimated = (skillName) => {
