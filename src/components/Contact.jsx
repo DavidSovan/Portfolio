@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ function Contact() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -63,13 +65,29 @@ function Contact() {
   };
 
   return (
-    <section
+    <motion.section
       id="contact"
       className="py-20 px-6 w-full min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900"
+      initial={prefersReducedMotion ? {} : { opacity: 0, y: 32 }}
+      whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={
+        prefersReducedMotion ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }
+      }
     >
       <div className="max-w-5xl mx-auto w-full">
         {/* Section header */}
-        <div className="mb-12 text-center">
+        <motion.div
+          className="mb-12 text-center"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+          whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={
+            prefersReducedMotion
+              ? { duration: 0 }
+              : { duration: 0.6, ease: "easeOut" }
+          }
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Get In Touch
           </h2>
@@ -77,11 +95,21 @@ function Contact() {
             Interested in working together or learning more about what I can
             bring to your team? Feel free to reach out!
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid gap-10 md:grid-cols-2">
           {/* Contact info */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 max-w-xl w-full">
+          <motion.div
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 max-w-xl w-full"
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 24 }}
+            whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={
+              prefersReducedMotion
+                ? { duration: 0 }
+                : { duration: 0.6, ease: "easeOut", delay: 0.05 }
+            }
+          >
             <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
               Contact Information
             </h3>
@@ -136,35 +164,61 @@ function Contact() {
                 Connect With Me
               </h4>
               <div className="flex space-x-4">
-                <a
+                <motion.a
                   href="https://github.com/DavidSovan"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
+                  whileHover={
+                    prefersReducedMotion ? {} : { y: -2, scale: 1.08 }
+                  }
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                 >
                   <i className="fab fa-github"></i>
-                </a>
-                <a
+                </motion.a>
+                <motion.a
                   href="https://www.linkedin.com/in/%E1%9E%9F%E1%9E%BB%E1%9E%9C%E1%9E%8E%E1%9F%92%E1%9E%8E-%E1%9E%8A%E1%9F%81%E1%9E%9C%E1%9E%B8%E1%9E%8F-834a07324"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
+                  whileHover={
+                    prefersReducedMotion ? {} : { y: -2, scale: 1.08 }
+                  }
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                 >
                   <i className="fab fa-linkedin-in"></i>
-                </a>
-                <a
+                </motion.a>
+                <motion.a
                   href="mailto:sovandavid19@gmail.com"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
+                  whileHover={
+                    prefersReducedMotion ? {} : { y: -2, scale: 1.08 }
+                  }
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                 >
                   <i className="fas fa-envelope"></i>
-                </a>
-                <a
+                </motion.a>
+                <motion.a
                   href="https://t.me/Sovandavid"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
+                  whileHover={
+                    prefersReducedMotion ? {} : { y: -2, scale: 1.08 }
+                  }
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                 >
                   <i className="fab fa-telegram-plane"></i>
-                </a>
+                </motion.a>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 max-w-xl w-full">
+          <motion.div
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 max-w-xl w-full"
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 24 }}
+            whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={
+              prefersReducedMotion
+                ? { duration: 0 }
+                : { duration: 0.6, ease: "easeOut", delay: 0.12 }
+            }
+          >
             <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
               Send Me a Message
             </h3>
@@ -239,18 +293,24 @@ function Contact() {
                 />
               </div>
 
-              <button
+              <motion.button
                 type="submit"
                 disabled={isSubmitting}
                 className="inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-sm font-medium text-white shadow-md transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-50 disabled:cursor-not-allowed disabled:opacity-60 dark:focus:ring-offset-gray-900"
+                whileHover={
+                  prefersReducedMotion
+                    ? {}
+                    : { scale: 1.02, boxShadow: "0 18px 40px rgba(79, 70, 229, 0.4)" }
+                }
+                whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
-              </button>
+              </motion.button>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

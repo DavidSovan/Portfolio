@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [activeSection, setActiveSection] = useState("home");
+  const { scrollYProgress } = useScroll();
+  const prefersReducedMotion = useReducedMotion();
+  const progressScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   // Track scroll position
   useEffect(() => {
@@ -46,13 +50,28 @@ function Header() {
   const isActive = (section) => activeSection === section;
 
   return (
-    <header
+    <motion.header
       className={`fixed top-0 w-full ${
         scrollPosition > 50
           ? "bg-gray-900/95 backdrop-blur-sm shadow-lg"
           : "bg-gray-900"
       } text-white py-4 px-6 flex justify-between items-center z-50 transition-all duration-300`}
+      initial={
+        prefersReducedMotion ? {} : { y: -32, opacity: 0 }
+      }
+      animate={
+        prefersReducedMotion ? {} : { y: 0, opacity: 1 }
+      }
+      transition={
+        prefersReducedMotion
+          ? { duration: 0 }
+          : { duration: 0.55, ease: "easeOut" }
+      }
     >
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left"
+        style={{ scaleX: progressScaleX }}
+      ></motion.div>
       {/* Logo/Name with animation */}
       <a href="#home" className="flex items-center space-x-2 group">
         <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold transition-transform group-hover:scale-110">
@@ -66,7 +85,7 @@ function Header() {
       {/* Desktop Menu */}
       <nav className="hidden md:flex space-x-8">
         {["home", "projects", "skills", "contact"].map((section) => (
-          <a
+          <motion.a
             key={section}
             href={`#${section}`}
             className={`${
@@ -74,12 +93,16 @@ function Header() {
                 ? "text-blue-400 font-medium"
                 : "text-gray-300 hover:text-white"
             } transition-colors duration-300 relative py-1`}
+            whileHover={
+              prefersReducedMotion ? {} : { y: -1, scale: 1.03 }
+            }
+            whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
           >
             {section.charAt(0).toUpperCase() + section.slice(1)}
             {isActive(section) && (
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
             )}
-          </a>
+          </motion.a>
         ))}
       </nav>
 
@@ -94,7 +117,7 @@ function Header() {
       </div>
 
       {/* Hamburger Button */}
-      <button
+      <motion.button
         id="menu-button"
         className="md:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
         onClick={(e) => {
@@ -102,6 +125,7 @@ function Header() {
           setIsOpen(!isOpen);
         }}
         aria-label="Toggle menu"
+        whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
       >
         <div
           className={`w-5 h-0.5 bg-white transition-all duration-300 ${
@@ -118,7 +142,7 @@ function Header() {
             isOpen ? "transform -rotate-45 -translate-y-1.5" : ""
           }`}
         ></div>
-      </button>
+      </motion.button>
 
       {/* Mobile Menu */}
       <div
@@ -153,7 +177,7 @@ function Header() {
           Download CV
         </a>
       </div>
-    </header>
+    </motion.header>
   );
 }
 
