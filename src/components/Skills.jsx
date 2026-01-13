@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 function Skills() {
   const [animatedSkills, setAnimatedSkills] = useState([]);
+  const prefersReducedMotion = useReducedMotion();
 
   const skillCategories = [
     {
@@ -47,13 +49,29 @@ function Skills() {
   };
 
   return (
-    <section
+    <motion.section
       id="skills"
       className="py-20 px-6 w-full min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900"
+      initial={prefersReducedMotion ? {} : { opacity: 0, y: 32 }}
+      whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={
+        prefersReducedMotion ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }
+      }
     >
       <div className="max-w-5xl mx-auto w-full">
         {/* Section header */}
-        <div className="mb-16 text-center">
+        <motion.div
+          className="mb-16 text-center"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 16 }}
+          whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={
+            prefersReducedMotion
+              ? { duration: 0 }
+              : { duration: 0.6, ease: "easeOut" }
+          }
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             My Skills
           </h2>
@@ -61,14 +79,27 @@ function Skills() {
             I've developed expertise in these technologies and continue to
             expand my knowledge every day.
           </p>
-        </div>
+        </motion.div>
 
         {/* Skills sections */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {skillCategories.map((category, categoryIndex) => (
-            <div
+            <motion.div
               key={categoryIndex}
               className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8"
+              initial={prefersReducedMotion ? {} : { opacity: 0, y: 24 }}
+              whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.65,
+                ease: "easeOut",
+                delay: prefersReducedMotion ? 0 : categoryIndex * 0.08,
+              }}
+              whileHover={
+                prefersReducedMotion
+                  ? {}
+                  : { y: -4, boxShadow: "0 22px 60px rgba(15, 23, 42, 0.28)" }
+              }
             >
               <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
                 {category.title}
@@ -98,7 +129,7 @@ function Skills() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
@@ -117,19 +148,23 @@ function Skills() {
               "Vite",
               "Ngrok",
             ].map((tech, index) => (
-              <span
+              <motion.span
                 key={index}
                 className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 
                           rounded-full border border-gray-200 dark:border-gray-700 shadow-sm
-                          transition-all hover:transform hover:scale-105 hover:border-blue-400 dark:hover:border-blue-500"
+                          transition-all hover:border-blue-400 dark:hover:border-blue-500"
+                whileHover={
+                  prefersReducedMotion ? {} : { scale: 1.06, y: -2 }
+                }
+                whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
               >
                 {tech}
-              </span>
+              </motion.span>
             ))}
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

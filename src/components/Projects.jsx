@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import projectImage from "../assets/Projects/Portfolio.png";
 import projectImage1 from "../assets/Projects/TaskApp.jpg";
 import projectImage2 from "../assets/Projects/Flutter_Ecom_UI.png";
@@ -11,6 +12,7 @@ import projectImage7 from "../assets/Projects/API.png";
 function Projects() {
   const [activeProject, setActiveProject] = useState(null);
   const [activeFilter, setActiveFilter] = useState("all");
+  const prefersReducedMotion = useReducedMotion();
 
   const categories = [
     { id: "all", label: "All" },
@@ -19,6 +21,37 @@ function Projects() {
     { id: "fullstack", label: "Full-Stack" },
     { id: "mobile", label: "Mobile" },
   ];
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 24 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: prefersReducedMotion ? 0 : 0.6,
+        ease: "easeOut",
+        when: "beforeChildren",
+        staggerChildren: prefersReducedMotion ? 0 : 0.08,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      y: prefersReducedMotion ? 0 : 28,
+      scale: prefersReducedMotion ? 1 : 0.98,
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: prefersReducedMotion ? 0 : 0.55,
+        ease: "easeOut",
+      },
+    },
+  };
 
   const projects = [
     {
@@ -119,12 +152,28 @@ function Projects() {
   });
 
   return (
-    <section
+    <motion.section
       id="projects"
       className="w-full py-20 bg-gray-50 dark:bg-gray-900 min-h-screen"
+      initial={prefersReducedMotion ? {} : { opacity: 0, y: 32 }}
+      whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={
+        prefersReducedMotion ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }
+      }
     >
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
+        <motion.div
+          className="text-center mb-16"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+          whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={
+            prefersReducedMotion
+              ? { duration: 0 }
+              : { duration: 0.6, ease: "easeOut" }
+          }
+        >
           <h2 className="text-4xl font-bold mb-4 relative inline-block ">
             <span className="relative z-10 font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               My Projects
@@ -135,7 +184,7 @@ function Projects() {
             Here are some of my recent projects. Each one represents a unique
             challenge and learning opportunity.
           </p>
-        </div>
+        </motion.div>
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -157,23 +206,50 @@ function Projects() {
         </div>
 
         {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project) => (
-              <div
+              <motion.article
                 key={project.id}
-                className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fadeInScale"
+                variants={cardVariants}
+                className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform"
                 onMouseEnter={() => setActiveProject(project.id)}
                 onMouseLeave={() => setActiveProject(null)}
+                whileHover={
+                  prefersReducedMotion
+                    ? {}
+                    : {
+                        y: -6,
+                        scale: 1.02,
+                        boxShadow:
+                          "0 22px 60px rgba(15, 23, 42, 0.28)",
+                      }
+                }
+                whileTap={prefersReducedMotion ? {} : { scale: 0.98, y: 0 }}
                 data-category={project.category}
               >
                 <div className="relative overflow-hidden h-48">
-                  <img
+                  <motion.img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-110"
+                    className="w-full h-full object-cover"
+                    initial={{ scale: 1.03 }}
+                    whileHover={
+                      prefersReducedMotion ? {} : { scale: 1.1, rotate: 0.5 }
+                    }
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 flex items-end"
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="p-4 w-full">
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag, index) => (
@@ -186,7 +262,7 @@ function Projects() {
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 <div className="p-6">
@@ -196,15 +272,21 @@ function Projects() {
                   </p>
 
                   <div className="flex justify-center mt-4">
-                    <a
+                    <motion.a
                       href={project.codeLink}
                       className="px-4 py-2 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"
+                      whileHover={
+                        prefersReducedMotion
+                          ? {}
+                          : { scale: 1.05, y: -1 }
+                      }
+                      whileTap={prefersReducedMotion ? {} : { scale: 0.96, y: 0 }}
                     >
                       View Code
-                    </a>
+                    </motion.a>
                   </div>
                 </div>
-              </div>
+              </motion.article>
             ))
           ) : (
             <div className="col-span-full text-center py-12">
@@ -213,19 +295,23 @@ function Projects() {
               </p>
             </div>
           )}
-        </div>
+        </motion.div>
 
         <div className="text-center mt-16">
-          <a
+          <motion.a
             href="https://github.com/DavidSovan"
             className="inline-flex items-center px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+            whileHover={
+              prefersReducedMotion ? {} : { scale: 1.03, y: -2 }
+            }
+            whileTap={prefersReducedMotion ? {} : { scale: 0.97, y: 0 }}
           >
             <span>See More Projects</span>
             <span className="ml-2">→</span>
-          </a>
+          </motion.a>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
