@@ -6,9 +6,19 @@ import projectImage3 from "../assets/Projects/Project1.png";
 import projectImage4 from "../assets/Projects/chat_app.png";
 import projectImage5 from "../assets/Projects/cineverse.png";
 import projectImage6 from "../assets/Projects/uber_taxi.png";
+import projectImage7 from "../assets/Projects/API.png";
 
 function Projects() {
   const [activeProject, setActiveProject] = useState(null);
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const categories = [
+    { id: "all", label: "All" },
+    { id: "frontend", label: "Frontend" },
+    { id: "backend", label: "Backend" },
+    { id: "fullstack", label: "Full-Stack" },
+    { id: "mobile", label: "Mobile" },
+  ];
 
   const projects = [
     {
@@ -20,16 +30,18 @@ function Projects() {
       tags: ["React", "Tailwind CSS", "Responsive Design"],
       demoLink: "#",
       codeLink: "https://github.com/DavidSovan/Portfolio",
+      category: "frontend",
     },
     {
       id: 2,
-      title: "Task Manager App (Frontend + Backend)",
+      title: "Task Manager App",
       description:
         "The Task Manager App is a cross-platform mobile application designed to help users organize, track, and manage their daily tasks efficiently. The frontend is developed using Flutter, providing a responsive and smooth user interface. The backend is powered by PHP, with a MySQL database handling task storage, user data, and application logic.",
       image: projectImage1,
       tags: ["Flutter", "Dart", "PHP", "MySQL"],
       demoLink: "#",
       codeLink: "https://github.com/DavidSovan/Task-Manager-App",
+      category: "fullstack",
     },
     {
       id: 3,
@@ -40,6 +52,7 @@ function Projects() {
       tags: ["Dart", "Flutter"],
       demoLink: "#",
       codeLink: "https://github.com/DavidSovan/Static-Ecommerce-app",
+      category: "mobile",
     },
     {
       id: 4,
@@ -50,6 +63,7 @@ function Projects() {
       tags: ["HTML", "CSS", "Responsive Design"],
       demoLink: "#",
       codeLink: "https://github.com/DavidSovan/E-commerce_UI",
+      category: "frontend",
     },
     {
       id: 5,
@@ -60,6 +74,7 @@ function Projects() {
       tags: ["Dart", "Flutter", "Firebase"],
       demoLink: "#",
       codeLink: "https://github.com/DavidSovan/Talky-Chat-App-",
+      category: "fullstack",
     },
     {
       id: 6,
@@ -70,6 +85,7 @@ function Projects() {
       tags: ["Dart", "Flutter", "API Integration"],
       demoLink: "#",
       codeLink: "https://github.com/DavidSovan/Cineverse-movie-app-",
+      category: "mobile",
     },
     {
       id: 7,
@@ -80,8 +96,27 @@ function Projects() {
       tags: ["Dart", "Flutter", "Laravel", "API Integration", "MySQL"],
       demoLink: "#",
       codeLink: "https://github.com/DavidSovan/Uber-App",
+      category: "fullstack",
     },
+     {
+      id: 8,
+      title: "POS System",
+      description:
+        "This POS (Point of Sale) and Inventory Management System is designed to handle retail operations with secure user management, real-time inventory tracking, sales processing, and comprehensive reporting capabilities.",
+      image: projectImage7,
+      tags: ["PHP", "Laravel", "API Integration", "MySQL"],
+      demoLink: "#",
+      codeLink: "https://github.com/DavidSovan/POS-system-backend",
+      category: "backend",
+    },
+    
   ];
+
+  // Filter projects based on active filter
+  const filteredProjects = projects.filter((project) => {
+    if (activeFilter === "all") return true;
+    return project.category.split(" ").includes(activeFilter);
+  });
 
   return (
     <section
@@ -102,53 +137,82 @@ function Projects() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-              onMouseEnter={() => setActiveProject(project.id)}
-              onMouseLeave={() => setActiveProject(null)}
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setActiveFilter(category.id)}
+              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${
+                activeFilter === category.id
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                  : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:border-blue-600 dark:hover:border-blue-400"
+              }`}
+              aria-pressed={activeFilter === category.id}
+              aria-label={`Filter by ${category.label}`}
             >
-              <div className="relative overflow-hidden h-48">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
-                  <div className="p-4 w-full">
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="px-2 py-1 text-xs rounded-full bg-blue-600/80 text-white"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+              {category.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Project Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.length > 0 ? (
+            filteredProjects.map((project) => (
+              <div
+                key={project.id}
+                className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fadeInScale"
+                onMouseEnter={() => setActiveProject(project.id)}
+                onMouseLeave={() => setActiveProject(null)}
+                data-category={project.category}
+              >
+                <div className="relative overflow-hidden h-48">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
+                    <div className="p-4 w-full">
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="px-2 py-1 text-xs rounded-full bg-blue-600/80 text-white"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-black">{project.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-                  {project.description}
-                </p>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2 text-black dark:text-white">{project.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                    {project.description}
+                  </p>
 
-                <div className="flex justify-center mt-4">
-                  <a
-                    href={project.codeLink}
-                    className="px-4 py-2 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"
-                  >
-                    View Code
-                  </a>
+                  <div className="flex justify-center mt-4">
+                    <a
+                      href={project.codeLink}
+                      className="px-4 py-2 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-md hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"
+                    >
+                      View Code
+                    </a>
+                  </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-500 dark:text-gray-400 text-lg">
+                No projects found for this category.
+              </p>
             </div>
-          ))}
+          )}
         </div>
 
         <div className="text-center mt-16">

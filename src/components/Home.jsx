@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import profileImage from "../assets/pf.jpg";
+import profileImage from "../assets/pf2.jpg";
 
 function Home() {
   const [isVisible, setIsVisible] = useState(false);
