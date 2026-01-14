@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import profileImage from "../assets/pf.jpg";
+import profileImage from "../assets/pf2.jpg";
 
 function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,7 +27,7 @@ function Home() {
       }
     >
       {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           className="absolute top-20 left-10 w-64 h-64 bg-blue-100 dark:bg-blue-900 rounded-full mix-blend-multiply filter blur-xl"
           style={{ y: topBlobY, opacity: blobOpacity }}
@@ -127,79 +127,77 @@ function Home() {
         </motion.p>
 
         {/* CTA buttons */}
-        <motion.div className="flex flex-wrap justify-center gap-4 mb-12">
-          <motion.button
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors"
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-            animate={{
-              opacity: isVisible ? 1 : 0,
-              y: isVisible || prefersReducedMotion ? 0 : 20,
-            }}
-            transition={
-              prefersReducedMotion
-                ? { duration: 0 }
-                : { duration: 0.7, ease: "easeOut", delay: 0.4 }
-            }
-            whileHover={
-              prefersReducedMotion
-                ? {}
-                : {
-                    scale: 1.04,
-                    y: -2,
-                    boxShadow: "0 18px 40px rgba(37, 99, 235, 0.35)",
-                  }
-            }
-            whileTap={
-              prefersReducedMotion ? {} : { scale: 0.97, y: 0 }
-            }
-            onClick={() =>
-              window.scrollTo({
-                top: document.getElementById("projects").offsetTop,
-                behavior: "smooth",
-              })
-            }
-          >
-            View My Work
-          </motion.button>
-          <motion.button
-            className="px-6 py-3 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-400 rounded-lg shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-            animate={{
-              opacity: isVisible ? 1 : 0,
-              y: isVisible || prefersReducedMotion ? 0 : 20,
-            }}
-            transition={
-              prefersReducedMotion
-                ? { duration: 0 }
-                : { duration: 0.7, ease: "easeOut", delay: 0.45 }
-            }
-            whileHover={
-              prefersReducedMotion
-                ? {}
-                : {
-                    scale: 1.03,
-                    y: -2,
-                    boxShadow: "0 16px 36px rgba(15, 23, 42, 0.28)",
-                  }
-            }
-            whileTap={
-              prefersReducedMotion ? {} : { scale: 0.97, y: 0 }
-            }
-            onClick={() =>
-              window.scrollTo({
-                top: document.getElementById("contact").offsetTop,
-                behavior: "smooth",
-              })
-            }
-          >
-            Contact Me
-          </motion.button>
-        </motion.div>
+          <motion.div className="flex flex-wrap justify-center gap-4 mb-12">
+            <motion.button
+              type="button"
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors"
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+              animate={{
+                opacity: isVisible ? 1 : 0,
+                y: isVisible || prefersReducedMotion ? 0 : 20,
+              }}
+              transition={
+                prefersReducedMotion
+            ? { duration: 0 }
+            : { duration: 0.7, ease: "easeOut", delay: 0.4 }
+              }
+              whileHover={
+                prefersReducedMotion
+            ? {}
+            : {
+                scale: 1.04,
+                y: -2,
+                boxShadow: "0 18px 40px rgba(37, 99, 235, 0.35)",
+              }
+              }
+              whileTap={
+                prefersReducedMotion ? {} : { scale: 0.97, y: 0 }
+              }
+              onClick={() =>
+                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              View My Work
+            </motion.button>
+            <motion.button
+              type="button"
+              className="px-6 py-3 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-400 rounded-lg shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+              animate={{
+                opacity: isVisible ? 1 : 0,
+                y: isVisible || prefersReducedMotion ? 0 : 20,
+              }}
+              transition={
+                prefersReducedMotion
+            ? { duration: 0 }
+            : { duration: 0.7, ease: "easeOut", delay: 0.45 }
+              }
+              whileHover={
+                prefersReducedMotion
+            ? {}
+            : {
+                scale: 1.03,
+                y: -2,
+                boxShadow: "0 16px 36px rgba(15, 23, 42, 0.28)",
+              }
+              }
+              whileTap={
+                prefersReducedMotion ? {} : { scale: 0.97, y: 0 }
+              }
+              onClick={() =>
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              Contact Me
+            </motion.button>
+          </motion.div>
 
-        {/* Social links */}
+          {/* Social links */}
         <motion.div className="flex justify-center space-x-6 mb-12">
           <motion.a
             href="https://github.com/DavidSovan"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
             animate={{
@@ -220,6 +218,8 @@ function Home() {
           </motion.a>
           <motion.a
             href="https://www.linkedin.com/in/%E1%9E%9F%E1%9E%BB%E1%9E%9C%E1%9E%8E%E1%9F%92%E1%9E%8E-%E1%9E%8A%E1%9F%81%E1%9E%9C%E1%9E%B8%E1%9E%8F-834a07324/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
             animate={{
@@ -240,6 +240,8 @@ function Home() {
           </motion.a>
           <motion.a
             href="https://t.me/Sovandavid"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
             animate={{
@@ -260,6 +262,8 @@ function Home() {
           </motion.a>
           <motion.a
             href="mailto:sovandavid19@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-2xl"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
             animate={{

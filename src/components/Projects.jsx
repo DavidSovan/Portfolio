@@ -148,7 +148,7 @@ function Projects() {
   // Filter projects based on active filter
   const filteredProjects = projects.filter((project) => {
     if (activeFilter === "all") return true;
-    return project.category.split(" ").includes(activeFilter);
+    return project.category === activeFilter;
   });
 
   return (
@@ -206,44 +206,23 @@ function Projects() {
         </div>
 
         {/* Project Grid */}
-        <motion.div
+        <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
         >
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project) => (
-              <motion.article
+              <div
                 key={project.id}
-                variants={cardVariants}
-                className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform"
+                className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform hover:shadow-xl hover:-translate-y-1.5"
                 onMouseEnter={() => setActiveProject(project.id)}
                 onMouseLeave={() => setActiveProject(null)}
-                whileHover={
-                  prefersReducedMotion
-                    ? {}
-                    : {
-                        y: -6,
-                        scale: 1.02,
-                        boxShadow:
-                          "0 22px 60px rgba(15, 23, 42, 0.28)",
-                      }
-                }
-                whileTap={prefersReducedMotion ? {} : { scale: 0.98, y: 0 }}
                 data-category={project.category}
               >
                 <div className="relative overflow-hidden h-48">
-                  <motion.img
+                  <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover"
-                    initial={{ scale: 1.03 }}
-                    whileHover={
-                      prefersReducedMotion ? {} : { scale: 1.1, rotate: 0.5 }
-                    }
-                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                   />
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 flex items-end"
@@ -286,7 +265,7 @@ function Projects() {
                     </motion.a>
                   </div>
                 </div>
-              </motion.article>
+              </div>
             ))
           ) : (
             <div className="col-span-full text-center py-12">
@@ -295,7 +274,7 @@ function Projects() {
               </p>
             </div>
           )}
-        </motion.div>
+        </div>
 
         <div className="text-center mt-16">
           <motion.a
