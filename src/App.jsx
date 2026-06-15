@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import Projects from "./components/Projects";
 import Skills from "./components/Skills";
+import Experience from "./components/Experience";
 import Contact from "./components/Contact";
 import { ThemeProvider } from "./ThemeContext";
 import { AnimatePresence, motion } from "framer-motion";
@@ -69,6 +70,7 @@ function App() {
             <Home />
             <Projects />
             <Skills />
+            <Experience />
             <Contact />
           </div>
         </motion.div>

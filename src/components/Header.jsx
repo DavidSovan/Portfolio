@@ -25,7 +25,7 @@ function Header() {
   useEffect(() => {
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
-      const sections = ["home", "projects", "skills", "contact"];
+      const sections = ["home", "projects", "skills", "experience", "contact"];
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
         if (element && window.scrollY >= element.offsetTop - 100) {
@@ -82,7 +82,7 @@ function Header() {
       </a>
 
       <nav className="hidden md:flex items-center space-x-1">
-        {["home", "projects", "skills", "contact"].map((section) => (
+        {["home", "projects", "skills", "experience", "contact"].map((section) => (
           <motion.a
             key={section}
             href={`#${section}`}
@@ -165,7 +165,7 @@ function Header() {
             : "scale-95 opacity-0 pointer-events-none"
         }`}
       >
-        {["home", "projects", "skills", "contact"].map((section) => (
+        {["home", "projects", "skills", "experience", "contact"].map((section) => (
           <a
             key={section}
             href={`#${section}`}
