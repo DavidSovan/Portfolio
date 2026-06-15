@@ -1,7 +1,143 @@
 @import "tailwindcss";
 
+@theme {
+  --color-anime-pink: #ff6b9d;
+  --color-anime-purple: #c44dff;
+  --color-anime-cyan: #00d4ff;
+  --color-anime-yellow: #ffe66d;
+  --color-anime-green: #00ff88;
+  --color-anime-red: #ff3366;
+  --color-dark-bg: #0a0a1a;
+  --color-dark-card: #12122a;
+  --color-dark-surface: #1a1a3e;
+  --font-anime: "Poppins", sans-serif;
+}
 
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(1deg); }
+  66% { transform: translateY(5px) rotate(-1deg); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(196, 77, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(196, 77, 255, 0.6), 0 0 60px rgba(0, 212, 255, 0.3); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes neonFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.6; }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(196, 77, 255, 0.4); }
+  50% { border-color: rgba(0, 212, 255, 0.6); }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes barSwell {
+  0% { transform: scaleY(0.6); }
+  50% { transform: scaleY(1.1); }
+  70% { transform: scaleY(0.95); }
+  100% { transform: scaleY(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
 
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", system-ui, sans-serif;
+  background: var(--color-dark-bg);
+  color: #e2e8f0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #c44dff, #00d4ff);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #ff6b9d, #c44dff);
+}
+
+.glass {
+  background: rgba(18, 18, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.neon-glow {
+  box-shadow: 0 0 20px rgba(196, 77, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.15);
+}
+
+.neon-text {
+  text-shadow: 0 0 10px rgba(196, 77, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.anime-gradient {
+  background: linear-gradient(135deg, #ff6b9d, #c44dff, #00d4ff, #c44dff, #ff6b9d);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+}
+
+.anime-gradient-text {
+  background: linear-gradient(135deg, #ff6b9d, #c44dff, #00d4ff);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.anime-border {
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+.cursor-blink::after {
+  content: "|";
+  animation: cursorBlink 0.8s step-end infinite;
+  margin-left: 2px;
+  color: #c44dff;
 }

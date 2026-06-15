@@ -1,5 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+
+function AnimatedNumber({ value, isActive }) {
+  const [display, setDisplay] = useState(0);
+  const frameRef = useRef(null);
+
+  useEffect(() => {
+    if (!isActive) {
+      setDisplay(0);
+      return;
+    }
+
+    const duration = 800;
+    const start = performance.now();
+
+    const animate = (now) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplay(Math.round(eased * value));
+
+      if (progress < 1) {
+        frameRef.current = requestAnimationFrame(animate);
+      } else {
+        setDisplay(value);
+      }
+    };
+
+    frameRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    };
+  }, [value, isActive]);
+
+  return <span>{display}%</span>;
+}
 
 function Skills() {
   const [animatedSkills, setAnimatedSkills] = useState([]);
@@ -31,100 +66,103 @@ function Skills() {
   ];
 
   useEffect(() => {
-    // Animate skills in sequence when component mounts
     const timer = setTimeout(() => {
       setAnimatedSkills(
-        skillCategories.flatMap((category) =>
-          category.skills.map((skill) => skill.name)
-        )
+        skillCategories.flatMap((cat) => cat.skills.map((s) => s.name))
       );
     }, 500);
-
     return () => clearTimeout(timer);
   });
 
-  // Check if a skill should be animated
-  const isAnimated = (skillName) => {
-    return animatedSkills.includes(skillName);
+  const isAnimated = (name) => animatedSkills.includes(name);
+
+  const getBarColor = (level) => {
+    if (level >= 80) return "from-anime-pink via-anime-purple to-anime-cyan";
+    if (level >= 60) return "from-anime-purple to-anime-cyan";
+    return "from-anime-purple to-anime-pink";
   };
 
   return (
     <motion.section
       id="skills"
-      className="py-20 px-6 w-full min-h-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900"
-      initial={prefersReducedMotion ? {} : { opacity: 0, y: 32 }}
-      whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={
-        prefersReducedMotion ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }
-      }
+      className="py-20 px-6 w-full min-h-screen flex flex-col items-center justify-center relative"
+      initial={prefersReducedMotion ? {} : { opacity: 0 }}
+      whileInView={prefersReducedMotion ? {} : { opacity: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }}
     >
       <div className="max-w-5xl mx-auto w-full">
-        {/* Section header */}
         <motion.div
           className="mb-16 text-center"
           initial={prefersReducedMotion ? {} : { opacity: 0, y: 16 }}
           whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
-          transition={
-            prefersReducedMotion
-              ? { duration: 0 }
-              : { duration: 0.6, ease: "easeOut" }
-          }
+          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            My Skills
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+            <span className="anime-gradient-text">My Skills</span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            I've developed expertise in these technologies and continue to
-            expand my knowledge every day.
+          <p className="text-gray-500 max-w-xl mx-auto text-sm">
+            Technologies I've been working with.
           </p>
         </motion.div>
 
-        {/* Skills sections */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={categoryIndex}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8"
+              className="glass rounded-2xl p-8 border border-white/5 hover:border-white/10 transition-all duration-500"
               initial={prefersReducedMotion ? {} : { opacity: 0, y: 24 }}
               whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{
                 duration: prefersReducedMotion ? 0 : 0.65,
                 ease: "easeOut",
-                delay: prefersReducedMotion ? 0 : categoryIndex * 0.08,
+                delay: prefersReducedMotion ? 0 : categoryIndex * 0.1,
               }}
-              whileHover={
-                prefersReducedMotion
-                  ? {}
-                  : { y: -4, boxShadow: "0 22px 60px rgba(15, 23, 42, 0.28)" }
-              }
+              whileHover={prefersReducedMotion ? {} : { y: -4, boxShadow: "0 20px 60px rgba(196,77,255,0.15)" }}
             >
-              <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
-                {category.title}
-              </h3>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-8 h-8 rounded-lg anime-gradient flex items-center justify-center text-white text-sm font-bold">
+                  {category.title === "Frontend" ? "{" : "</>"}
+                </div>
+                <h3 className="text-xl font-semibold text-white/90">
+                  {category.title}
+                </h3>
+              </div>
 
-              <div className="space-y-6">
+              <div className="space-y-5">
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="font-medium text-gray-700 dark:text-gray-300">
+                      <span className="text-sm font-medium text-gray-300">
                         {skill.name}
                       </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {skill.level}%
+                      <span className="text-xs text-anime-cyan font-mono">
+                        <AnimatedNumber
+                          value={skill.level}
+                          isActive={isAnimated(skill.name)}
+                        />
                       </span>
                     </div>
-                    <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000 ease-out"
-                        style={{
-                          width: isAnimated(skill.name)
-                            ? `${skill.level}%`
-                            : "0%",
+                    <div className="h-2.5 bg-white/5 rounded-full overflow-hidden">
+                      <motion.div
+                        className={`h-full rounded-full bg-gradient-to-r ${getBarColor(skill.level)}`}
+                        initial={{ width: "0%" }}
+                        animate={{
+                          width: isAnimated(skill.name) ? `${skill.level}%` : "0%",
+                          scaleY: isAnimated(skill.name) ? [0.6, 1.1, 0.95, 1] : 1,
                         }}
-                      ></div>
+                        transition={{
+                          width: { duration: 1.2, ease: "easeOut", delay: skillIndex * 0.08 },
+                          scaleY: { duration: 0.6, delay: skillIndex * 0.08 + 0.8, ease: "easeOut" },
+                        }}
+                        style={{
+                          boxShadow: isAnimated(skill.name)
+                            ? "0 0 10px rgba(196,77,255,0.4)"
+                            : "none",
+                        }}
+                      />
                     </div>
                   </div>
                 ))}
@@ -133,36 +171,29 @@ function Skills() {
           ))}
         </div>
 
-        {/* Additional skills showcased as tags */}
-        <div className="mt-16 text-center">
-          <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
+        <motion.div
+          className="mt-16 text-center"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+          whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6 }}
+        >
+          <h3 className="text-lg font-semibold text-white/70 mb-6">
             Additional Tools
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
-            {[
-              "Git",
-              "GitHub",
-              "Figma",
-              "Postman",
-              "VS Code",
-              "Vite",
-              "Ngrok",
-            ].map((tech, index) => (
+            {["Git", "GitHub", "Figma", "Postman", "VS Code", "Vite", "Ngrok"].map((tech, index) => (
               <motion.span
                 key={index}
-                className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 
-                          rounded-full border border-gray-200 dark:border-gray-700 shadow-sm
-                          transition-all hover:border-blue-400 dark:hover:border-blue-500"
-                whileHover={
-                  prefersReducedMotion ? {} : { scale: 1.06, y: -2 }
-                }
+                className="px-4 py-2 rounded-full text-sm glass text-gray-400 border border-white/5 hover:border-anime-purple/30 hover:text-white transition-all duration-300"
+                whileHover={prefersReducedMotion ? {} : { scale: 1.06, y: -2 }}
                 whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
               >
                 {tech}
               </motion.span>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </motion.section>
   );

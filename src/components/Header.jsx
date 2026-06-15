@@ -9,12 +9,9 @@ function Header() {
   const prefersReducedMotion = useReducedMotion();
   const progressScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
-
-      // Determine active section based on scroll position
       const sections = ["home", "projects", "skills", "contact"];
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
@@ -24,15 +21,12 @@ function Header() {
         }
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
     if (!isOpen) return;
-
     const handleClickOutside = (e) => {
       if (
         !e.target.closest("#mobile-menu") &&
@@ -41,113 +35,85 @@ function Header() {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, [isOpen]);
 
-  // Check if link is active
   const isActive = (section) => activeSection === section;
 
   return (
     <motion.header
-      className={`fixed top-0 w-full ${
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrollPosition > 50
-          ? "bg-gray-900/95 backdrop-blur-sm shadow-lg"
-          : "bg-gray-900"
-      } text-white py-4 px-6 flex justify-between items-center z-50 transition-all duration-300`}
-      initial={
-        prefersReducedMotion ? {} : { y: -32, opacity: 0 }
-      }
-      animate={
-        prefersReducedMotion ? {} : { y: 0, opacity: 1 }
-      }
-      transition={
-        prefersReducedMotion
-          ? { duration: 0 }
-          : { duration: 0.55, ease: "easeOut" }
-      }
+          ? "glass shadow-lg"
+          : "bg-transparent"
+      } py-3 px-6 flex justify-between items-center`}
+      initial={prefersReducedMotion ? {} : { y: -32, opacity: 0 }}
+      animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
+      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.55, ease: "easeOut" }}
     >
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left"
+        className="absolute bottom-0 left-0 right-0 h-0.5 origin-left"
         style={{ scaleX: progressScaleX }}
-      ></motion.div>
-      {/* Logo/Name with animation */}
+      >
+        <div className="h-full anime-gradient" />
+      </motion.div>
+
       <a href="#home" className="flex items-center space-x-2 group">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold transition-transform group-hover:scale-110">
-          D{/* First letter of your name */}
+        <div className="w-9 h-9 rounded-full anime-gradient flex items-center justify-center text-white font-bold text-sm transition-all duration-300 group-hover:shadow-lg group-hover:scale-110 neon-glow">
+          D
         </div>
-        <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+        <h1 className="text-xl font-bold text-white/90 group-hover:text-white transition-colors">
           David
         </h1>
       </a>
 
-      {/* Desktop Menu */}
-      <nav className="hidden md:flex space-x-8">
+      <nav className="hidden md:flex items-center space-x-1">
         {["home", "projects", "skills", "contact"].map((section) => (
           <motion.a
             key={section}
             href={`#${section}`}
-            className={`${
+            className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
               isActive(section)
-                ? "text-blue-400 font-medium"
-                : "text-gray-300 hover:text-white"
-            } transition-colors duration-300 relative py-1`}
-            whileHover={
-              prefersReducedMotion ? {} : { y: -1, scale: 1.03 }
-            }
-            whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
+                ? "text-white"
+                : "text-gray-400 hover:text-white"
+            }`}
+            whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+            whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
           >
             {section.charAt(0).toUpperCase() + section.slice(1)}
             {isActive(section) && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
+              <motion.span
+                layoutId="activeNav"
+                className="absolute inset-0 rounded-lg bg-white/10 border border-white/10"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
             )}
           </motion.a>
         ))}
-      </nav>
-
-      {/* Resume Download Button */}
-      <div className="hidden md:block">
         <a
           href="/Resumes.pdf"
-          className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium hover:from-blue-600 hover:to-purple-600 transition-colors"
+          className="ml-3 px-5 py-2 rounded-lg text-sm font-medium text-white anime-gradient hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
         >
-          Download CV
+          CV ⚡
         </a>
-      </div>
+      </nav>
 
-      {/* Hamburger Button */}
       <motion.button
         id="menu-button"
-        className="md:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors"
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsOpen(!isOpen);
-        }}
+        className="md:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 rounded-lg glass hover:bg-white/10 transition-colors"
+        onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
         aria-label="Toggle menu"
         whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
       >
-        <div
-          className={`w-5 h-0.5 bg-white transition-all duration-300 ${
-            isOpen ? "transform rotate-45 translate-y-1.5" : ""
-          }`}
-        ></div>
-        <div
-          className={`w-5 h-0.5 bg-white transition-all duration-300 ${
-            isOpen ? "opacity-0" : "opacity-100"
-          }`}
-        ></div>
-        <div
-          className={`w-5 h-0.5 bg-white transition-all duration-300 ${
-            isOpen ? "transform -rotate-45 -translate-y-1.5" : ""
-          }`}
-        ></div>
+        <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${isOpen ? "transform rotate-45 translate-y-1.5" : ""}`} />
+        <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${isOpen ? "opacity-0" : "opacity-100"}`} />
+        <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${isOpen ? "transform -rotate-45 -translate-y-1.5" : ""}`} />
       </motion.button>
 
-      {/* Mobile Menu */}
       <div
         id="mobile-menu"
-        className={`absolute top-full right-0 mt-2 mr-4 bg-gray-800 rounded-lg shadow-lg flex flex-col md:hidden overflow-hidden transition-all duration-300 origin-top-right ${
+        className={`absolute top-full right-0 mt-2 mr-4 glass rounded-xl shadow-2xl flex flex-col md:hidden overflow-hidden transition-all duration-300 origin-top-right border border-white/10 ${
           isOpen
             ? "scale-100 opacity-100"
             : "scale-95 opacity-0 pointer-events-none"
@@ -160,21 +126,19 @@ function Header() {
             onClick={() => setIsOpen(false)}
             className={`px-6 py-3 ${
               isActive(section)
-                ? "bg-gray-700 text-blue-400 font-medium"
-                : "text-gray-200 hover:bg-gray-700 hover:text-white"
+                ? "bg-white/10 text-anime-cyan font-medium"
+                : "text-gray-300 hover:bg-white/5 hover:text-white"
             } transition-colors duration-300`}
           >
             {section.charAt(0).toUpperCase() + section.slice(1)}
           </a>
         ))}
-
-        {/* Mobile CV Download Button */}
         <a
           href="/Resumes.pdf"
           onClick={() => setIsOpen(false)}
-          className="px-6 py-3 border-t border-gray-700 text-blue-400 hover:bg-gray-700 transition-colors"
+          className="px-6 py-3 border-t border-white/10 text-anime-pink hover:bg-white/5 transition-colors"
         >
-          Download CV
+          Download CV ⚡
         </a>
       </div>
     </motion.header>
