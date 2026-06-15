@@ -102,7 +102,7 @@ function Skills() {
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
             <span className="anime-gradient-text">My Skills</span>
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto text-sm">
+          <p className="text-[var(--theme-text-muted)] max-w-xl mx-auto text-sm">
             Technologies I've been working with.
           </p>
         </motion.div>
@@ -111,7 +111,7 @@ function Skills() {
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={categoryIndex}
-              className="glass rounded-2xl p-8 border border-white/5 hover:border-white/10 transition-all duration-500"
+              className="glass rounded-2xl p-8 border border-[var(--theme-border)] hover:border-[var(--theme-border-medium)] transition-all duration-500"
               initial={prefersReducedMotion ? {} : { opacity: 0, y: 24 }}
               whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -126,7 +126,7 @@ function Skills() {
                 <div className="w-8 h-8 rounded-lg anime-gradient flex items-center justify-center text-white text-sm font-bold">
                   {category.title === "Frontend" ? "{" : "</>"}
                 </div>
-                <h3 className="text-xl font-semibold text-white/90">
+                <h3 className="text-xl font-semibold text-[var(--theme-text-heading)]">
                   {category.title}
                 </h3>
               </div>
@@ -135,7 +135,7 @@ function Skills() {
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium text-gray-300">
+                      <span className="text-sm font-medium text-[var(--theme-text-secondary)]">
                         {skill.name}
                       </span>
                       <span className="text-xs text-anime-cyan font-mono">
@@ -145,7 +145,7 @@ function Skills() {
                         />
                       </span>
                     </div>
-                    <div className="h-2.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-2.5 bg-[var(--theme-surface)] rounded-full overflow-hidden">
                       <motion.div
                         className={`h-full rounded-full bg-gradient-to-r ${getBarColor(skill.level)}`}
                         initial={{ width: "0%" }}
@@ -178,14 +178,14 @@ function Skills() {
           viewport={{ once: true, amount: 0.3 }}
           transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6 }}
         >
-          <h3 className="text-lg font-semibold text-white/70 mb-6">
+          <h3 className="text-lg font-semibold text-[var(--theme-text-secondary)] mb-6">
             Additional Tools
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
             {["Git", "GitHub", "Figma", "Postman", "VS Code", "Vite", "Ngrok"].map((tech, index) => (
               <motion.span
                 key={index}
-                className="px-4 py-2 rounded-full text-sm glass text-gray-400 border border-white/5 hover:border-anime-purple/30 hover:text-white transition-all duration-300"
+                className="px-4 py-2 rounded-full text-sm glass text-[var(--theme-text-secondary)] border border-[var(--theme-border)] hover:border-anime-purple/30 hover:text-[var(--theme-text)] transition-all duration-300"
                 whileHover={prefersReducedMotion ? {} : { scale: 1.06, y: -2 }}
                 whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
               >

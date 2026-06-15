@@ -14,7 +14,7 @@ const sparkles = Array.from({ length: 12 }, (_, i) => ({
 const roles = [
   "Developer in progress",
   "Lifelong Learner",
-  "Anime Enthusiast",
+  "AI Enthusiast",
 ];
 
 function Home() {
@@ -126,7 +126,7 @@ function Home() {
             whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
           >
             <div className="absolute inset-0 rounded-full anime-gradient opacity-60 blur-xl scale-110" />
-            <div className="w-56 h-56 rounded-full overflow-hidden border-[3px] border-white/20 shadow-2xl relative">
+            <div className="w-56 h-56 rounded-full overflow-hidden border-[3px] border-[var(--theme-border)] shadow-2xl relative">
               <img
                 src={profileImage}
                 alt="Profile"
@@ -160,7 +160,7 @@ function Home() {
           animate={{ opacity: isVisible ? 1 : 0 }}
           transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.5, delay: 0.25 }}
         >
-          <span className="inline-block text-lg md:text-xl text-gray-400 font-light tracking-wide cursor-blink">
+          <span className="inline-block text-lg md:text-xl text-[var(--theme-text-secondary)] font-light tracking-wide cursor-blink">
             {prefersReducedMotion
               ? roles[0]
               : roles[textIndex].substring(0, charIndex)}
@@ -168,7 +168,7 @@ function Home() {
         </motion.div>
 
         <motion.p
-          className="text-base text-gray-500 max-w-2xl mx-auto mb-10 text-center leading-relaxed"
+          className="text-base text-[var(--theme-text-muted)] max-w-2xl mx-auto mb-10 text-center leading-relaxed"
           initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible || prefersReducedMotion ? 0 : 20 }}
           transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.3 }}
@@ -195,7 +195,7 @@ function Home() {
           </motion.button>
           <motion.button
             type="button"
-            className="px-7 py-3 rounded-lg text-white/90 font-medium glass hover:bg-white/10 transition-all duration-300 anime-border"
+            className="px-7 py-3 rounded-lg text-[var(--theme-text-heading)] font-medium glass hover:bg-[var(--theme-surface-hover)] transition-all duration-300 anime-border"
             whileHover={prefersReducedMotion ? {} : { scale: 1.03, y: -2 }}
             whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
             onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
@@ -221,7 +221,7 @@ function Home() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-11 h-11 flex items-center justify-center rounded-full glass text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300 text-lg"
+              className="w-11 h-11 flex items-center justify-center rounded-full glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-surface-hover)] transition-all duration-300 text-lg"
               whileHover={prefersReducedMotion ? {} : { y: -3, scale: 1.1 }}
               whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
             >
@@ -236,7 +236,7 @@ function Home() {
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <span className="text-gray-600 text-2xl">↓</span>
+        <span className="text-[var(--theme-text-dim)] text-2xl">↓</span>
       </motion.div>
     </motion.section>
   );

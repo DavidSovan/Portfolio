@@ -38,7 +38,7 @@ function Contact() {
     }
   };
 
-  const inputClass = "w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-anime-purple/50 focus:ring-1 focus:ring-anime-purple/30 transition-all duration-300";
+  const inputClass = "w-full rounded-xl bg-[var(--theme-input-bg)] border border-[var(--theme-border-medium)] px-4 py-3 text-sm text-[var(--theme-text)] placeholder-[var(--theme-text-muted)] focus:outline-none focus:border-anime-purple/50 focus:ring-1 focus:ring-anime-purple/30 transition-all duration-300";
 
   return (
     <motion.section
@@ -60,20 +60,20 @@ function Contact() {
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
             <span className="anime-gradient-text">Get In Touch</span>
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto text-sm">
+          <p className="text-[var(--theme-text-muted)] max-w-xl mx-auto text-sm">
             Interested in working together? Feel free to reach out!
           </p>
         </motion.div>
 
         <div className="grid gap-8 md:grid-cols-2">
           <motion.div
-            className="glass rounded-2xl p-8 border border-white/5"
+            className="glass rounded-2xl p-8 border border-[var(--theme-border)]"
             initial={prefersReducedMotion ? {} : { opacity: 0, x: -20 }}
             whileInView={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, ease: "easeOut", delay: 0.05 }}
           >
-            <h3 className="text-xl font-semibold text-white/90 mb-8">
+            <h3 className="text-xl font-semibold text-[var(--theme-text-heading)] mb-8">
               Contact Information
             </h3>
 
@@ -88,15 +88,15 @@ function Contact() {
                     {item.icon}
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-gray-400">{item.label}</h4>
-                    <p className="text-white/80 text-sm">{item.value}</p>
+                    <h4 className="text-sm font-medium text-[var(--theme-text-secondary)]">{item.label}</h4>
+                    <p className="text-[var(--theme-text)] text-sm">{item.value}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="mt-10">
-              <h4 className="text-sm font-medium text-gray-400 mb-4">Connect With Me</h4>
+              <h4 className="text-sm font-medium text-[var(--theme-text-secondary)] mb-4">Connect With Me</h4>
               <div className="flex space-x-3">
                 {[
                   { icon: "fab fa-github", href: "https://github.com/DavidSovan" },
@@ -107,7 +107,7 @@ function Contact() {
                   <motion.a
                     key={i}
                     href={link.href}
-                    className="w-10 h-10 flex items-center justify-center rounded-lg glass text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300 border border-white/5"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-surface-hover)] transition-all duration-300 border border-[var(--theme-border)]"
                     whileHover={prefersReducedMotion ? {} : { y: -2, scale: 1.08 }}
                     whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
                   >
@@ -119,13 +119,13 @@ function Contact() {
           </motion.div>
 
           <motion.div
-            className="glass rounded-2xl p-8 border border-white/5"
+            className="glass rounded-2xl p-8 border border-[var(--theme-border)]"
             initial={prefersReducedMotion ? {} : { opacity: 0, x: 20 }}
             whileInView={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, ease: "easeOut", delay: 0.12 }}
           >
-            <h3 className="text-xl font-semibold text-white/90 mb-6">
+            <h3 className="text-xl font-semibold text-[var(--theme-text-heading)] mb-6">
               Send Me a Message
             </h3>
 
@@ -143,15 +143,15 @@ function Contact() {
 
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="name" className="block text-xs font-medium text-gray-400 mb-1.5">Name</label>
+                <label htmlFor="name" className="block text-xs font-medium text-[var(--theme-text-secondary)] mb-1.5">Name</label>
                 <input id="name" name="name" type="text" required value={formData.name} onChange={handleChange} className={inputClass} placeholder="Your name" />
               </div>
               <div>
-                <label htmlFor="email" className="block text-xs font-medium text-gray-400 mb-1.5">Email</label>
+                <label htmlFor="email" className="block text-xs font-medium text-[var(--theme-text-secondary)] mb-1.5">Email</label>
                 <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="you@example.com" />
               </div>
               <div>
-                <label htmlFor="message" className="block text-xs font-medium text-gray-400 mb-1.5">Message</label>
+                <label htmlFor="message" className="block text-xs font-medium text-[var(--theme-text-secondary)] mb-1.5">Message</label>
                 <textarea id="message" name="message" required rows={4} value={formData.message} onChange={handleChange} className={inputClass} placeholder="Your message..." />
               </div>
               <motion.button

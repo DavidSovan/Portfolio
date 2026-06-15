@@ -13,6 +13,44 @@
   --font-anime: "Poppins", sans-serif;
 }
 
+:root {
+  --theme-bg: #0a0a1a;
+  --theme-text: #e2e8f0;
+  --theme-text-secondary: #9ca3af;
+  --theme-text-muted: #6b7280;
+  --theme-text-dim: #4b5563;
+  --theme-text-heading: rgba(255, 255, 255, 0.9);
+  --theme-border: rgba(255, 255, 255, 0.06);
+  --theme-border-medium: rgba(255, 255, 255, 0.1);
+  --theme-surface: rgba(255, 255, 255, 0.05);
+  --theme-surface-hover: rgba(255, 255, 255, 0.1);
+  --theme-glass-bg: rgba(18, 18, 42, 0.6);
+  --theme-glass-border: rgba(255, 255, 255, 0.08);
+  --theme-input-bg: rgba(255, 255, 255, 0.05);
+  --theme-scrollbar-bg: #0a0a1a;
+  --theme-scrollbar-thumb: linear-gradient(to bottom, #c44dff, #00d4ff);
+  --theme-scrollbar-thumb-hover: linear-gradient(to bottom, #ff6b9d, #c44dff);
+}
+
+.light {
+  --theme-bg: #f0f2f5;
+  --theme-text: #1f2937;
+  --theme-text-secondary: #6b7280;
+  --theme-text-muted: #9ca3af;
+  --theme-text-dim: #d1d5db;
+  --theme-text-heading: #111827;
+  --theme-border: rgba(0, 0, 0, 0.06);
+  --theme-border-medium: rgba(0, 0, 0, 0.1);
+  --theme-surface: rgba(0, 0, 0, 0.03);
+  --theme-surface-hover: rgba(0, 0, 0, 0.06);
+  --theme-glass-bg: rgba(255, 255, 255, 0.7);
+  --theme-glass-border: rgba(0, 0, 0, 0.06);
+  --theme-input-bg: #ffffff;
+  --theme-scrollbar-bg: #f0f2f5;
+  --theme-scrollbar-thumb: linear-gradient(to bottom, #c44dff, #00d4ff);
+  --theme-scrollbar-thumb-hover: linear-gradient(to bottom, #ff6b9d, #c44dff);
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   33% { transform: translateY(-10px) rotate(1deg); }
@@ -73,8 +111,9 @@ html {
 
 body {
   font-family: "Poppins", system-ui, sans-serif;
-  background: var(--color-dark-bg);
-  color: #e2e8f0;
+  background: var(--theme-bg);
+  color: var(--theme-text);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 ::-webkit-scrollbar {
@@ -82,23 +121,24 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a1a;
+  background: var(--theme-scrollbar-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #c44dff, #00d4ff);
+  background: var(--theme-scrollbar-thumb);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #ff6b9d, #c44dff);
+  background: var(--theme-scrollbar-thumb-hover);
 }
 
 .glass {
-  background: rgba(18, 18, 42, 0.6);
+  background: var(--theme-glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--theme-glass-border);
+  transition: background-color 0.5s ease, border-color 0.5s ease;
 }
 
 .glass-light {
@@ -140,4 +180,34 @@ body {
   animation: cursorBlink 0.8s step-end infinite;
   margin-left: 2px;
   color: #c44dff;
+}
+
+::view-transition-old(root) {
+  animation: none;
+}
+
+::view-transition-new(root) {
+  animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both theme-reveal;
+  mix-blend-mode: normal;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--toggle-x, 50vw) var(--toggle-y, 50vh));
+  }
+  to {
+    clip-path: circle(calc(var(--toggle-r, 150vw)) at var(--toggle-x, 50vw) var(--toggle-y, 50vh));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .glass {
+    transition-duration: 0s;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0s;
+  }
 }

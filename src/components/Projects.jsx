@@ -127,7 +127,7 @@ function Projects() {
           <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
             <span className="anime-gradient-text">My Projects</span>
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto text-sm">
+          <p className="text-[var(--theme-text-muted)] max-w-xl mx-auto text-sm">
             Each project represents a unique challenge and learning opportunity.
           </p>
         </motion.div>
@@ -140,7 +140,7 @@ function Projects() {
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeFilter === category.id
                   ? "anime-gradient text-white shadow-lg shadow-purple-500/25"
-                  : "glass text-gray-400 hover:text-white hover:bg-white/10"
+                  : "glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-surface-hover)]"
               }`}
               whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
               whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
@@ -175,7 +175,7 @@ function Projects() {
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-bg/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--theme-bg)]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag, i) => (
                           <span
@@ -190,16 +190,16 @@ function Projects() {
                   </div>
 
                   <div className="p-6">
-                    <h3 className="text-lg font-bold text-white/90 mb-2 group-hover:text-anime-cyan transition-colors">
+                    <h3 className="text-lg font-bold text-[var(--theme-text-heading)] mb-2 group-hover:text-anime-cyan transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-3">
+                    <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed mb-4 line-clamp-3">
                       {project.description}
                     </p>
 
                     <motion.a
                       href={project.codeLink}
-                      className="inline-flex items-center px-4 py-2 rounded-lg text-sm text-anime-cyan glass border border-white/5 hover:bg-white/10 hover:border-anime-cyan/30 transition-all duration-300"
+                      className="inline-flex items-center px-4 py-2 rounded-lg text-sm text-anime-cyan glass border border-[var(--theme-border)] hover:bg-[var(--theme-surface-hover)] hover:border-anime-cyan/30 transition-all duration-300"
                       whileHover={prefersReducedMotion ? {} : { scale: 1.03, x: 3 }}
                       whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
                     >
@@ -211,7 +211,7 @@ function Projects() {
             ))
           ) : (
             <div className="col-span-full text-center py-16">
-              <p className="text-gray-500">No projects found for this category.</p>
+              <p className="text-[var(--theme-text-muted)]">No projects found for this category.</p>
             </div>
           )}
         </motion.div>
@@ -224,7 +224,7 @@ function Projects() {
         >
           <motion.a
             href="https://github.com/DavidSovan"
-            className="inline-flex items-center px-6 py-3 rounded-lg glass text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300 border border-white/5"
+            className="inline-flex items-center px-6 py-3 rounded-lg glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-surface-hover)] transition-all duration-300 border border-[var(--theme-border)]"
             whileHover={prefersReducedMotion ? {} : { scale: 1.03, y: -2 }}
             whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
           >
