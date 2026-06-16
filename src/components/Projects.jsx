@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import projectImage from "../assets/Projects/Portfolio.png";
 import projectImage1 from "../assets/Projects/TaskApp.jpg";
-import projectImage2 from "../assets/Projects/Flutter_Ecom_UI.png";
+import projectImage2 from "../assets/Projects/ecom_demo.png";
 import projectImage3 from "../assets/Projects/Project1.png";
 import projectImage4 from "../assets/Projects/chat_app.png";
 import projectImage5 from "../assets/Projects/cineverse.png";

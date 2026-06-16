@@ -173,9 +173,7 @@ function Home() {
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible || prefersReducedMotion ? 0 : 20 }}
           transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.3 }}
         >
-          Developer in progress, passionate about building clean, responsive,
-          and user-friendly applications. I enjoy creating smooth user
-          experiences with intuitive design.
+          I love using AI to transform ideas into applications. I enjoy building innovative solutions, exploring new technologies, and creating products that make an impact.
         </motion.p>
 
         <motion.div
