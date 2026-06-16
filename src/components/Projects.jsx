@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import projectImage from "../assets/Projects/Portfolio.png";
 import projectImage1 from "../assets/Projects/TaskApp.jpg";
 import projectImage2 from "../assets/Projects/ecom_demo.png";
 import projectImage3 from "../assets/Projects/Project1.png";
 import projectImage4 from "../assets/Projects/chat_app.png";
-import projectImage5 from "../assets/Projects/cineverse.png";
+import projectImage5 from "../assets/Projects/cineverse1.png";
 import projectImage6 from "../assets/Projects/uber_taxi.png";
 import projectImage7 from "../assets/Projects/API.png";
 
@@ -42,7 +42,17 @@ function TiltCard({ children, className, prefersReducedMotion }) {
 
 function Projects() {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [selectedProject, setSelectedProject] = useState(null);
   const prefersReducedMotion = useReducedMotion();
+
+  const handleClose = useCallback(() => setSelectedProject(null), []);
+
+  useEffect(() => {
+    if (!selectedProject) return;
+    const onKey = (e) => { if (e.key === "Escape") handleClose(); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [selectedProject, handleClose]);
 
   const categories = [
     { id: "all", label: "All" },
@@ -169,7 +179,10 @@ function Projects() {
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: prefersReducedMotion ? 0 : index * 0.07 }}
                 >
-                  <div className="relative overflow-hidden h-48">
+                  <div
+                    className="relative overflow-hidden h-48"
+                    onClick={() => setSelectedProject(project)}
+                  >
                     <img
                       src={project.image}
                       alt={project.title}
@@ -233,6 +246,44 @@ function Projects() {
           </motion.a>
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={handleClose}
+          >
+            <motion.div
+              className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={handleClose}
+                className="absolute -top-10 right-0 text-white/70 hover:text-white text-2xl transition-colors z-10"
+                aria-label="Close"
+              >
+                &times;
+              </button>
+              <img
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                className="w-full h-auto max-h-[85vh] object-contain rounded-xl"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent rounded-b-xl">
+                <h3 className="text-white text-lg font-bold">{selectedProject.title}</h3>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.section>
   );
 }
