@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import projectImage from "../assets/Projects/Portfolio.png";
 import projectImage1 from "../assets/Projects/TaskApp.jpg";
@@ -262,63 +263,66 @@ function Projects() {
         </motion.div>
       </div>
 
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--theme-bg)]/80 backdrop-blur-2xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            onClick={handleClose}
-          >
+      {typeof document !== "undefined" && createPortal(
+        <AnimatePresence>
+          {selectedProject && (
             <motion.div
-              className="relative max-w-5xl w-full max-h-[90vh] flex flex-col glass rounded-3xl overflow-hidden border border-[var(--theme-border)] shadow-2xl"
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              onClick={(e) => e.stopPropagation()}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--theme-bg)]/80 backdrop-blur-2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              onClick={handleClose}
             >
-              <button
-                onClick={handleClose}
-                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-black/20 text-white hover:bg-black/40 backdrop-blur-md transition-colors z-10"
-                aria-label="Close"
+              <motion.div
+                className="relative max-w-5xl w-full max-h-[90vh] flex flex-col glass rounded-3xl overflow-hidden border border-[var(--theme-border)] shadow-2xl"
+                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                onClick={(e) => e.stopPropagation()}
               >
-                &times;
-              </button>
-              <div className="overflow-y-auto w-full max-h-[90vh]">
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className="w-full h-auto object-cover"
-                />
-                <div className="p-8 md:p-12 bg-[var(--theme-bg)]">
-                  <h3 className="text-3xl font-bold tracking-tight text-[var(--theme-text-heading)] mb-4">{selectedProject.title}</h3>
-                  <p className="text-[var(--theme-text-muted)] text-lg leading-relaxed mb-8 max-w-3xl">
-                    {selectedProject.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {selectedProject.tags.map((tag, i) => (
-                      <span key={i} className="px-4 py-1.5 text-sm font-medium rounded-full bg-[var(--theme-surface)] text-[var(--theme-text-secondary)] border border-[var(--theme-border)]">
-                        {tag}
-                      </span>
-                    ))}
+                <button
+                  onClick={handleClose}
+                  className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-black/20 text-white hover:bg-black/40 backdrop-blur-md transition-colors z-10"
+                  aria-label="Close"
+                >
+                  &times;
+                </button>
+                <div className="overflow-y-auto w-full max-h-[90vh]">
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    className="w-full h-auto object-cover"
+                  />
+                  <div className="p-8 md:p-12 bg-[var(--theme-bg)]">
+                    <h3 className="text-3xl font-bold tracking-tight text-[var(--theme-text-heading)] mb-4">{selectedProject.title}</h3>
+                    <p className="text-[var(--theme-text-muted)] text-lg leading-relaxed mb-8 max-w-3xl">
+                      {selectedProject.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {selectedProject.tags.map((tag, i) => (
+                        <span key={i} className="px-4 py-1.5 text-sm font-medium rounded-full bg-[var(--theme-surface)] text-[var(--theme-text-secondary)] border border-[var(--theme-border)]">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <a
+                      href={selectedProject.codeLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-6 py-3 rounded-full bg-[var(--theme-text-heading)] text-[var(--theme-bg)] font-medium transition-transform hover:scale-105"
+                    >
+                      View Source Code
+                    </a>
                   </div>
-                  <a
-                    href={selectedProject.codeLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 rounded-full bg-[var(--theme-text-heading)] text-[var(--theme-bg)] font-medium transition-transform hover:scale-105"
-                  >
-                    View Source Code
-                  </a>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </motion.section>
   );
 }

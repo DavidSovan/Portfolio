@@ -182,3 +182,9 @@ body {
   }
 }
 
+@media (min-width: 768px) {
+  body, a, button, input, textarea, select, [role="button"] {
+    cursor: none !important;
+  }
+}
+
