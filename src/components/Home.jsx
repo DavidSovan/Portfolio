@@ -1,31 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import profileImage from "../assets/pf2.jpg";
 
-const sparkles = Array.from({ length: 12 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 6 + 3,
-  delay: Math.random() * 3,
-  duration: Math.random() * 2 + 2,
-}));
-
 const roles = [
-  "Developer in progress",
-  "Lifelong Learner",
-  "AI Enthusiast",
+  "Frontend Engineer",
+  "Creative Developer",
+  "UI/UX Enthusiast",
 ];
 
 function Home() {
   const [isVisible, setIsVisible] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
   const { scrollYProgress } = useScroll();
   const prefersReducedMotion = useReducedMotion();
-  const topBlobY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  const bottomBlobY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
     setIsVisible(true);
@@ -33,211 +22,109 @@ function Home() {
 
   useEffect(() => {
     if (prefersReducedMotion) return;
-    const currentRole = roles[textIndex];
-    let timeout;
-
-    if (isDeleting) {
-      if (charIndex === 0) {
-        setIsDeleting(false);
-        setTextIndex((prev) => (prev + 1) % roles.length);
-        return;
-      }
-      timeout = setTimeout(() => setCharIndex((prev) => prev - 1), 40);
-    } else {
-      if (charIndex === currentRole.length) {
-        timeout = setTimeout(() => setIsDeleting(true), 2000);
-        return;
-      }
-      timeout = setTimeout(() => setCharIndex((prev) => prev + 1), 60);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, textIndex, prefersReducedMotion]);
+    const interval = setInterval(() => {
+      setTextIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion]);
 
   return (
     <motion.section
       id="home"
       className="relative w-full min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden"
-      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.8, ease: "easeOut" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
     >
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-10 left-10 w-72 h-72 rounded-full opacity-20"
-          style={{
-            background: "radial-gradient(circle, rgba(255,107,157,0.3), transparent 70%)",
-            y: topBlobY,
-          }}
-        />
-        <motion.div
-          className="absolute bottom-10 right-10 w-80 h-80 rounded-full opacity-20"
-          style={{
-            background: "radial-gradient(circle, rgba(0,212,255,0.25), transparent 70%)",
-            y: bottomBlobY,
-          }}
-        />
-        <motion.div
-          className="absolute top-1/3 right-1/4 w-60 h-60 rounded-full opacity-15"
-          style={{
-            background: "radial-gradient(circle, rgba(196,77,255,0.3), transparent 70%)",
-            y: topBlobY,
-          }}
-        />
+      <motion.div style={{ y, opacity }} className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] rounded-full bg-white opacity-[0.02] blur-[120px]" />
+      </motion.div>
 
-        {sparkles.map((s) => (
-          <motion.div
-            key={s.id}
-            className="absolute"
-            style={{ left: `${s.x}%`, top: `${s.y}%` }}
-            animate={{
-              opacity: [0, 1, 0],
-              scale: [0, 1.2, 0],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: s.duration,
-              repeat: Infinity,
-              delay: s.delay,
-              ease: "easeInOut",
-            }}
-          >
-            {s.id % 2 === 0 ? (
-              <span className="text-anime-yellow" style={{ fontSize: s.size + 4 }}>✦</span>
-            ) : (
-              <span className="text-anime-cyan" style={{ fontSize: s.size + 2 }}>✧</span>
-            )}
-          </motion.div>
-        ))}
-      </div>
-
-      <motion.div className="max-w-4xl relative">
+      <div className="max-w-5xl relative z-10 w-full mx-auto flex flex-col items-center">
         <motion.div
-          className="mb-8 flex justify-center"
-          initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }}
+          className="mb-10"
+          initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
-          <motion.div
-            className="relative"
-            animate={prefersReducedMotion ? {} : { y: [0, -10, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            whileHover={prefersReducedMotion ? {} : { scale: 1.03 }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
-          >
-            <div className="absolute inset-0 rounded-full anime-gradient opacity-60 blur-xl scale-110" />
-            <div className="w-56 h-56 rounded-full overflow-hidden border-[3px] border-[var(--theme-border)] shadow-2xl relative">
+          <div className="relative group cursor-pointer">
+            <div className="absolute -inset-1 rounded-full bg-white/10 blur-xl opacity-0 group-hover:opacity-100 transition duration-700" />
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border border-[var(--theme-border-medium)] relative z-10">
               <img
                 src={profileImage}
-                alt="Profile"
-                className="w-full h-full object-cover"
+                alt="Sovan David"
+                className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
               />
             </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="overflow-hidden mb-4 flex flex-col items-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <span className="px-3 py-1 text-xs font-medium tracking-widest uppercase rounded-full border border-[var(--theme-border)] text-[var(--theme-text-secondary)] bg-[var(--theme-surface)] mb-6">
+            Available for Work
+          </span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-center tracking-tight leading-none mb-2 text-[var(--theme-text-heading)]">
+            Sovan David
+          </h1>
+        </motion.div>
+
+        <motion.div
+          className="h-10 md:h-14 flex items-center justify-center overflow-hidden mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <motion.div
+            key={textIndex}
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -40, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            className="text-xl md:text-3xl text-[var(--theme-text-secondary)] font-medium"
+          >
+            {roles[textIndex]}
           </motion.div>
         </motion.div>
 
         <motion.p
-          className="text-center text-anime-purple font-medium mb-2 tracking-widest text-sm"
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 15 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible || prefersReducedMotion ? 0 : 15 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: 0.1 }}
+          className="text-base md:text-lg text-[var(--theme-text-muted)] max-w-2xl mx-auto mb-12 text-center leading-relaxed"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          Welcome
-        </motion.p>
-
-        <motion.h1
-          className="text-5xl md:text-7xl font-extrabold text-center mb-3"
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible || prefersReducedMotion ? 0 : 20 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.15 }}
-        >
-          <span className="anime-gradient-text">Sovan David</span>
-        </motion.h1>
-
-        <motion.div
-          className="text-center mb-6 h-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isVisible ? 1 : 0 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.5, delay: 0.25 }}
-        >
-          <span className="inline-block text-lg md:text-xl text-[var(--theme-text-secondary)] font-light tracking-wide cursor-blink">
-            {prefersReducedMotion
-              ? roles[0]
-              : roles[textIndex].substring(0, charIndex)}
-          </span>
-        </motion.div>
-
-        <motion.p
-          className="text-base text-[var(--theme-text-muted)] max-w-2xl mx-auto mb-10 text-center leading-relaxed"
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible || prefersReducedMotion ? 0 : 20 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.3 }}
-        >
-          I love using AI to transform ideas into applications. I enjoy building innovative solutions, exploring new technologies, and creating products that make an impact.
+          I craft digital experiences with a focus on motion, aesthetics, and meticulous attention to detail. Blending design and engineering to build modern software.
         </motion.p>
 
         <motion.div
-          className="flex flex-wrap justify-center gap-4 mb-12"
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible || prefersReducedMotion ? 0 : 20 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.4 }}
+          className="flex flex-wrap justify-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.button
-            type="button"
-            className="px-7 py-3 rounded-lg text-white font-medium anime-gradient transition-all duration-300"
-            whileHover={prefersReducedMotion ? {} : { scale: 1.05, y: -2, boxShadow: "0 0 30px rgba(196,77,255,0.5)" }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
+            className="px-8 py-3.5 rounded-full bg-[var(--theme-text-heading)] text-[var(--theme-bg)] font-medium transition-all hover:scale-105"
+            whileTap={{ scale: 0.95 }}
             onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
           >
-            View My Work
+            Explore Work
           </motion.button>
           <motion.button
-            type="button"
-            className="px-7 py-3 rounded-lg text-[var(--theme-text-heading)] font-medium glass hover:bg-[var(--theme-surface-hover)] transition-all duration-300 anime-border"
-            whileHover={prefersReducedMotion ? {} : { scale: 1.03, y: -2 }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
+            className="px-8 py-3.5 rounded-full glass text-[var(--theme-text)] font-medium transition-all hover:bg-[var(--theme-surface-hover)]"
+            whileTap={{ scale: 0.95 }}
             onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
           >
-            Contact Me
+            Get in Touch
           </motion.button>
         </motion.div>
-
-        <motion.div
-          className="flex justify-center space-x-6"
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible || prefersReducedMotion ? 0 : 20 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.7, delay: 0.5 }}
-        >
-          {[
-            { icon: "fab fa-github", href: "https://github.com/DavidSovan" },
-            { icon: "fab fa-linkedin-in", href: "https://www.linkedin.com/in/%E1%9E%9F%E1%9E%BB%E1%9E%9C%E1%9E%8E%E1%9F%92%E1%9E%8E-%E1%9E%8A%E1%9F%81%E1%9E%9C%E1%9E%B8%E1%9E%8F-834a07324/" },
-            { icon: "fab fa-telegram", href: "https://t.me/Sovandavid" },
-            { icon: "fas fa-envelope", href: "mailto:sovandavid19@gmail.com" },
-          ].map((link, i) => (
-            <motion.a
-              key={i}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-11 h-11 flex items-center justify-center rounded-full glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-surface-hover)] transition-all duration-300 text-lg"
-              whileHover={prefersReducedMotion ? {} : { y: -3, scale: 1.1 }}
-              whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-            >
-              <i className={link.icon} />
-            </motion.a>
-          ))}
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span className="text-[var(--theme-text-dim)] text-2xl">↓</span>
-      </motion.div>
+      </div>
     </motion.section>
   );
 }
 
 export default Home;
+

@@ -12,17 +12,21 @@ import projectImage7 from "../assets/Projects/API.png";
 function TiltCard({ children, className, prefersReducedMotion }) {
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e) => {
     if (prefersReducedMotion) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    setRotateY(((x - rect.width / 2) / rect.width) * 8);
-    setRotateX(((y - rect.height / 2) / rect.height) * -8);
+    
+    // Very subtle tilt
+    setRotateY(((x - rect.width / 2) / rect.width) * 4);
+    setRotateX(((y - rect.height / 2) / rect.height) * -4);
   };
 
   const handleMouseLeave = () => {
+    setIsHovered(false);
     setRotateX(0);
     setRotateY(0);
   };
@@ -31,9 +35,11 @@ function TiltCard({ children, className, prefersReducedMotion }) {
     <motion.div
       className={className}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: "1000px" }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      animate={{ scale: isHovered && !prefersReducedMotion ? 1.02 : 1 }}
     >
       {children}
     </motion.div>
@@ -102,13 +108,13 @@ function Projects() {
     {
       id: 7, title: "Uber Taxi App",
       description: "Full-stack Flutter & Laravel app with role-based access for customers and drivers, RESTful APIs, and ride booking.",
-      image: projectImage6, tags: ["Dart", "Flutter", "Laravel", "API Integration", "MySQL"],
+      image: projectImage6, tags: ["Dart", "Flutter", "Laravel", "MySQL"],
       codeLink: "https://github.com/DavidSovan/Uber-App", category: "fullstack",
     },
     {
       id: 8, title: "POS System",
       description: "POS and Inventory Management System with secure user management, real-time tracking, sales processing, and reporting.",
-      image: projectImage7, tags: ["PHP", "Laravel", "API Integration", "MySQL"],
+      image: projectImage7, tags: ["PHP", "Laravel", "MySQL"],
       codeLink: "https://github.com/DavidSovan/POS-system-backend", category: "backend",
     },
   ];
@@ -120,42 +126,40 @@ function Projects() {
   return (
     <motion.section
       id="projects"
-      className="w-full py-20 px-6 min-h-screen relative"
-      initial={prefersReducedMotion ? {} : { opacity: 0 }}
-      whileInView={prefersReducedMotion ? {} : { opacity: 1 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }}
+      className="w-full py-32 px-6 min-h-screen relative"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 1 }}
     >
-      <div className="container mx-auto">
+      <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-16"
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-          whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-            <span className="anime-gradient-text">My Projects</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-[var(--theme-text-heading)]">
+            Selected Works
           </h2>
-          <p className="text-[var(--theme-text-muted)] max-w-xl mx-auto text-sm">
-            Each project represents a unique challenge and learning opportunity.
+          <p className="text-[var(--theme-text-muted)] max-w-xl mx-auto text-base">
+            Showcasing a curated collection of recent projects and technical explorations.
           </p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 mb-16">
           {categories.map((category) => (
             <motion.button
               key={category.id}
               onClick={() => setActiveFilter(category.id)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeFilter === category.id
-                  ? "anime-gradient text-white shadow-lg shadow-purple-500/25"
+                  ? "bg-[var(--theme-text-heading)] text-[var(--theme-bg)] shadow-sm"
                   : "glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-surface-hover)]"
               }`}
-              whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-              whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+              whileTap={{ scale: 0.95 }}
               aria-pressed={activeFilter === category.id}
-              aria-label={`Filter by ${category.label}`}
             >
               {category.label}
             </motion.button>
@@ -163,7 +167,7 @@ function Projects() {
         </div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           key={activeFilter}
         >
           {filteredProjects.length > 0 ? (
@@ -171,78 +175,89 @@ function Projects() {
               <TiltCard
                 key={project.id}
                 prefersReducedMotion={prefersReducedMotion}
-                className="glass rounded-2xl overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-xl hover:shadow-purple-500/10"
+                className="glass rounded-3xl overflow-hidden group cursor-pointer flex flex-col h-full border border-[var(--theme-border)] hover:border-[var(--theme-border-medium)] transition-colors duration-500"
               >
                 <motion.div
-                  initial={prefersReducedMotion ? {} : { opacity: 0, y: 40, scale: 0.95 }}
-                  whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0, scale: 1 }}
+                  className="flex flex-col h-full"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.1 }}
-                  transition={{ duration: 0.5, ease: "easeOut", delay: prefersReducedMotion ? 0 : index * 0.07 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}
                 >
                   <div
-                    className="relative overflow-hidden h-48"
+                    className="relative overflow-hidden aspect-[4/3] bg-[var(--theme-surface)]"
                     onClick={() => setSelectedProject(project)}
                   >
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--theme-bg)]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                      <div className="flex flex-wrap gap-2">
+                  </div>
+
+                  <div className="p-8 flex flex-col flex-grow">
+                    <div className="flex-grow">
+                      <h3 className="text-xl font-semibold tracking-tight text-[var(--theme-text-heading)] mb-3 transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed mb-6">
+                        {project.description}
+                      </p>
+                    </div>
+                    
+                    <div className="mt-auto">
+                      <div className="flex flex-wrap gap-2 mb-6">
                         {project.tags.map((tag, i) => (
                           <span
                             key={i}
-                            className="px-2.5 py-1 text-xs rounded-full text-white anime-gradient"
+                            className="px-3 py-1 text-xs font-medium rounded-full bg-[var(--theme-surface)] text-[var(--theme-text-secondary)] border border-[var(--theme-border)]"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
+
+                      <a
+                        href={project.codeLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-medium text-[var(--theme-text-heading)] transition-all group/link"
+                      >
+                        View Repository 
+                        <motion.span 
+                          className="ml-2 inline-block transition-transform duration-300 group-hover/link:translate-x-1"
+                        >
+                          →
+                        </motion.span>
+                      </a>
                     </div>
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold text-[var(--theme-text-heading)] mb-2 group-hover:text-anime-cyan transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-[var(--theme-text-muted)] text-sm leading-relaxed mb-4 line-clamp-3">
-                      {project.description}
-                    </p>
-
-                    <motion.a
-                      href={project.codeLink}
-                      className="inline-flex items-center px-4 py-2 rounded-lg text-sm text-anime-cyan glass border border-[var(--theme-border)] hover:bg-[var(--theme-surface-hover)] hover:border-anime-cyan/30 transition-all duration-300"
-                      whileHover={prefersReducedMotion ? {} : { scale: 1.03, x: 3 }}
-                      whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
-                    >
-                      View Code →
-                    </motion.a>
                   </div>
                 </motion.div>
               </TiltCard>
             ))
           ) : (
-            <div className="col-span-full text-center py-16">
+            <div className="col-span-full text-center py-20">
               <p className="text-[var(--theme-text-muted)]">No projects found for this category.</p>
             </div>
           )}
         </motion.div>
 
         <motion.div
-          className="text-center mt-16"
+          className="text-center mt-20"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
+          transition={{ duration: 1 }}
         >
           <motion.a
             href="https://github.com/DavidSovan"
-            className="inline-flex items-center px-6 py-3 rounded-lg glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-surface-hover)] transition-all duration-300 border border-[var(--theme-border)]"
-            whileHover={prefersReducedMotion ? {} : { scale: 1.03, y: -2 }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.97 }}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-8 py-3.5 rounded-full glass text-[var(--theme-text)] hover:bg-[var(--theme-surface-hover)] transition-all font-medium border border-[var(--theme-border)]"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <span>See More Projects</span>
-            <span className="ml-2">→</span>
+            <span>View GitHub Profile</span>
           </motion.a>
         </motion.div>
       </div>
@@ -250,35 +265,55 @@ function Projects() {
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--theme-bg)]/80 backdrop-blur-2xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             onClick={handleClose}
           >
             <motion.div
-              className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative max-w-5xl w-full max-h-[90vh] flex flex-col glass rounded-3xl overflow-hidden border border-[var(--theme-border)] shadow-2xl"
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={handleClose}
-                className="absolute -top-10 right-0 text-white/70 hover:text-white text-2xl transition-colors z-10"
+                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-black/20 text-white hover:bg-black/40 backdrop-blur-md transition-colors z-10"
                 aria-label="Close"
               >
                 &times;
               </button>
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                className="w-full h-auto max-h-[85vh] object-contain rounded-xl"
-              />
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent rounded-b-xl">
-                <h3 className="text-white text-lg font-bold">{selectedProject.title}</h3>
+              <div className="overflow-y-auto w-full max-h-[90vh]">
+                <img
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  className="w-full h-auto object-cover"
+                />
+                <div className="p-8 md:p-12 bg-[var(--theme-bg)]">
+                  <h3 className="text-3xl font-bold tracking-tight text-[var(--theme-text-heading)] mb-4">{selectedProject.title}</h3>
+                  <p className="text-[var(--theme-text-muted)] text-lg leading-relaxed mb-8 max-w-3xl">
+                    {selectedProject.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {selectedProject.tags.map((tag, i) => (
+                      <span key={i} className="px-4 py-1.5 text-sm font-medium rounded-full bg-[var(--theme-surface)] text-[var(--theme-text-secondary)] border border-[var(--theme-border)]">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <a
+                    href={selectedProject.codeLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-6 py-3 rounded-full bg-[var(--theme-text-heading)] text-[var(--theme-bg)] font-medium transition-transform hover:scale-105"
+                  >
+                    View Source Code
+                  </a>
+                </div>
               </div>
             </motion.div>
           </motion.div>

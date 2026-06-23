@@ -10,7 +10,8 @@ function Header() {
   const { scrollYProgress } = useScroll();
   const prefersReducedMotion = useReducedMotion();
   const { isDark, toggleTheme } = useTheme();
-  const progressScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
 
   const handleToggle = (e) => {
     if (prefersReducedMotion) {
@@ -56,58 +57,52 @@ function Header() {
 
   return (
     <motion.header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrollPosition > 50
-          ? "glass shadow-lg"
-          : "bg-transparent"
-      } py-3 px-6 flex justify-between items-center`}
+      className={`fixed top-0 w-full z-50 transition-all duration-500 py-4 px-6 flex justify-between items-center`}
       initial={prefersReducedMotion ? {} : { y: -32, opacity: 0 }}
       animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
-      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.55, ease: "easeOut" }}
+      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 h-0.5 origin-left"
-        style={{ scaleX: progressScaleX }}
-      >
-        <div className="h-full anime-gradient" />
-      </motion.div>
+      <motion.div 
+        className="absolute inset-0 glass shadow-sm pointer-events-none"
+        style={{ opacity: headerOpacity }}
+      />
 
-      <a href="#home" className="flex items-center space-x-2 group">
-        <div className="w-9 h-9 rounded-full anime-gradient flex items-center justify-center text-white font-bold text-sm transition-all duration-300 group-hover:shadow-lg group-hover:scale-110 neon-glow">
+      <a href="#home" className="relative flex items-center space-x-2 group z-10">
+        <div className="w-8 h-8 rounded-full bg-[var(--theme-text-heading)] flex items-center justify-center text-[var(--theme-bg)] font-bold text-sm transition-transform duration-500 group-hover:scale-105">
           D
         </div>
-        <h1 className="text-xl font-bold text-[var(--theme-text-heading)] group-hover:text-[var(--theme-text)] transition-colors">
+        <h1 className="text-lg font-semibold tracking-tight text-[var(--theme-text-heading)]">
           David
         </h1>
       </a>
 
-      <nav className="hidden md:flex items-center space-x-1">
+      <nav className="hidden md:flex items-center space-x-1 glass px-2 py-1.5 rounded-full z-10 shadow-sm border-[var(--theme-border)]">
         {["home", "projects", "skills", "experience", "contact"].map((section) => (
           <motion.a
             key={section}
             href={`#${section}`}
-            className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+            className={`relative px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-300 ${
               isActive(section)
-                ? "text-[var(--theme-text)]"
+                ? "text-[var(--theme-bg)]"
                 : "text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)]"
             }`}
-            whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-            whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
           >
-            {section.charAt(0).toUpperCase() + section.slice(1)}
             {isActive(section) && (
               <motion.span
                 layoutId="activeNav"
-                className="absolute inset-0 rounded-lg bg-[var(--theme-surface)] border border-[var(--theme-border-medium)]"
-                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                className="absolute inset-0 rounded-full bg-[var(--theme-text-heading)]"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
               />
             )}
+            <span className="relative z-10">{section.charAt(0).toUpperCase() + section.slice(1)}</span>
           </motion.a>
         ))}
+      </nav>
+
+      <div className="hidden md:flex items-center space-x-3 z-10">
         <motion.button
           onClick={handleToggle}
-          className="ml-2 w-9 h-9 flex items-center justify-center rounded-lg text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-surface-hover)] transition-all duration-300 text-sm"
-          whileHover={prefersReducedMotion ? {} : { scale: 1.1 }}
+          className="w-10 h-10 flex items-center justify-center rounded-full glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] transition-colors duration-300 text-sm"
           whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
           aria-label="Toggle theme"
         >
@@ -122,16 +117,16 @@ function Header() {
         </motion.button>
         <a
           href="/Resumes.pdf"
-          className="ml-3 px-5 py-2 rounded-lg text-sm font-medium text-white anime-gradient hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
+          className="px-5 py-2 rounded-full text-sm font-medium bg-[var(--theme-text-heading)] text-[var(--theme-bg)] hover:opacity-90 transition-opacity duration-300"
         >
-          CV ⚡
+          CV
         </a>
-      </nav>
+      </div>
 
-      <div className="flex items-center md:hidden space-x-2">
+      <div className="flex items-center md:hidden space-x-2 z-10">
         <motion.button
           onClick={handleToggle}
-          className="w-9 h-9 flex items-center justify-center rounded-lg glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] transition-all duration-300 text-sm"
+          className="w-10 h-10 flex items-center justify-center rounded-full glass text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)] transition-colors duration-300 text-sm"
           whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
           aria-label="Toggle theme"
         >
@@ -146,49 +141,54 @@ function Header() {
         </motion.button>
         <motion.button
           id="menu-button"
-          className="flex flex-col justify-center items-center w-10 h-10 space-y-1.5 rounded-lg glass hover:bg-[var(--theme-surface-hover)] transition-colors"
+          className="flex flex-col justify-center items-center w-10 h-10 space-y-1.5 rounded-full glass hover:bg-[var(--theme-surface-hover)] transition-colors"
           onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
           aria-label="Toggle menu"
           whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
         >
-          <div className={`w-5 h-0.5 bg-[var(--theme-text)] transition-all duration-300 ${isOpen ? "transform rotate-45 translate-y-1.5" : ""}`} />
-          <div className={`w-5 h-0.5 bg-[var(--theme-text)] transition-all duration-300 ${isOpen ? "opacity-0" : "opacity-100"}`} />
-          <div className={`w-5 h-0.5 bg-[var(--theme-text)] transition-all duration-300 ${isOpen ? "transform -rotate-45 -translate-y-1.5" : ""}`} />
+          <div className={`w-4 h-[2px] bg-[var(--theme-text)] transition-all duration-300 ${isOpen ? "transform rotate-45 translate-y-[8px]" : ""}`} />
+          <div className={`w-4 h-[2px] bg-[var(--theme-text)] transition-all duration-300 ${isOpen ? "opacity-0" : "opacity-100"}`} />
+          <div className={`w-4 h-[2px] bg-[var(--theme-text)] transition-all duration-300 ${isOpen ? "transform -rotate-45 -translate-y-[8px]" : ""}`} />
         </motion.button>
       </div>
 
       <div
         id="mobile-menu"
-        className={`absolute top-full right-0 mt-2 mr-4 glass rounded-xl shadow-2xl flex flex-col md:hidden overflow-hidden transition-all duration-300 origin-top-right border border-[var(--theme-glass-border)] ${
+        className={`absolute top-full right-4 mt-2 w-48 glass rounded-2xl shadow-2xl flex flex-col md:hidden overflow-hidden transition-all duration-400 origin-top-right border border-[var(--theme-glass-border)] z-20 ${
           isOpen
             ? "scale-100 opacity-100"
             : "scale-95 opacity-0 pointer-events-none"
         }`}
       >
-        {["home", "projects", "skills", "experience", "contact"].map((section) => (
-          <a
-            key={section}
-            href={`#${section}`}
-            onClick={() => setIsOpen(false)}
-            className={`px-6 py-3 ${
-              isActive(section)
-                ? "bg-[var(--theme-surface)] text-anime-cyan font-medium"
-                : "text-[var(--theme-text-secondary)] hover:bg-[var(--theme-surface-hover)] hover:text-[var(--theme-text)]"
-            } transition-colors duration-300`}
-          >
-            {section.charAt(0).toUpperCase() + section.slice(1)}
-          </a>
-        ))}
-        <a
-          href="/Resumes.pdf"
-          onClick={() => setIsOpen(false)}
-          className="px-6 py-3 border-t border-[var(--theme-border-medium)] text-anime-pink hover:bg-[var(--theme-surface-hover)] transition-colors"
-        >
-          Download CV ⚡
-        </a>
+        <div className="py-2">
+          {["home", "projects", "skills", "experience", "contact"].map((section) => (
+            <a
+              key={section}
+              href={`#${section}`}
+              onClick={() => setIsOpen(false)}
+              className={`px-6 py-3 block text-sm ${
+                isActive(section)
+                  ? "bg-[var(--theme-surface)] text-[var(--theme-text-heading)] font-medium"
+                  : "text-[var(--theme-text-secondary)] hover:bg-[var(--theme-surface-hover)] hover:text-[var(--theme-text)]"
+              } transition-colors duration-300`}
+            >
+              {section.charAt(0).toUpperCase() + section.slice(1)}
+            </a>
+          ))}
+          <div className="px-4 py-2 mt-2 border-t border-[var(--theme-border-medium)]">
+            <a
+              href="/Resumes.pdf"
+              onClick={() => setIsOpen(false)}
+              className="block w-full text-center py-2.5 rounded-lg bg-[var(--theme-text-heading)] text-[var(--theme-bg)] text-sm font-medium transition-opacity hover:opacity-90"
+            >
+              Download CV
+            </a>
+          </div>
+        </div>
       </div>
     </motion.header>
   );
 }
 
 export default Header;
+
