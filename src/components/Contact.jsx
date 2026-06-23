@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { MagneticButton } from "./MagneticButton";
 
 function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -165,15 +166,14 @@ function Contact() {
                 <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-[var(--theme-text-muted)] mb-2 ml-1">Message</label>
                 <textarea id="message" name="message" required rows={5} value={formData.message} onChange={handleChange} className={inputClass} placeholder="How can I help you?" />
               </div>
-              <motion.button
+              <MagneticButton
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 rounded-2xl bg-[var(--theme-text-heading)] text-[var(--theme-bg)] font-medium text-base transition-all hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed mt-4"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
+                className="w-full py-4 rounded-2xl bg-[var(--theme-text-heading)] text-[var(--theme-bg)] font-medium text-base transition-all hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed mt-4 flex items-center justify-center relative overflow-hidden group"
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </motion.button>
+                <span className="relative z-10">{isSubmitting ? "Sending..." : "Send Message"}</span>
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] rounded-2xl" />
+              </MagneticButton>
             </form>
           </motion.div>
         </div>

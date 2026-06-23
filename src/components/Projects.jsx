@@ -1,14 +1,65 @@
-import { useState, useEffect, useCallback } from "react";
-import { createPortal } from "react-dom";
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import projectImage from "../assets/Projects/Portfolio.png";
 import projectImage1 from "../assets/Projects/TaskApp.jpg";
 import projectImage2 from "../assets/Projects/ecom_demo.png";
 import projectImage3 from "../assets/Projects/Project1.png";
 import projectImage4 from "../assets/Projects/chat_app.png";
-import projectImage5 from "../assets/Projects/cineverse1.png";
+import projectImage5 from "../assets/Projects/Pro-cine.png";
 import projectImage6 from "../assets/Projects/uber_taxi.png";
 import projectImage7 from "../assets/Projects/API.png";
+
+export const projects = [
+  {
+    id: 1, title: "Portfolio Website",
+    description: "A personal portfolio website built with React and Tailwind CSS to showcase my projects and skills.",
+    image: projectImage, tags: ["React", "Tailwind CSS", "Responsive Design"],
+    codeLink: "https://github.com/DavidSovan/Portfolio", category: "frontend",
+  },
+  {
+    id: 2, title: "Task Manager App",
+    description: "Cross-platform mobile app to organize, track, and manage daily tasks efficiently. Flutter frontend with PHP/MySQL backend.",
+    image: projectImage1, tags: ["Flutter", "Dart", "PHP", "MySQL"],
+    codeLink: "https://github.com/DavidSovan/Task-Manager-App", category: "fullstack",
+  },
+  {
+    id: 3, title: "Static E-commerce App",
+    description: "A static e-commerce app built with Flutter, featuring product listings and a shopping cart.",
+    image: projectImage2, tags: ["Dart", "Flutter"],
+    codeLink: "https://github.com/DavidSovan/Static-Ecommerce-app", category: "mobile",
+  },
+  {
+    id: 4, title: "E-commerce UI Design",
+    description: "E-commerce UI design built with HTML and CSS for a responsive and modern shopping experience.",
+    image: projectImage3, tags: ["HTML", "CSS", "Responsive Design"],
+    codeLink: "https://github.com/DavidSovan/E-commerce_UI", category: "frontend",
+  },
+  {
+    id: 5, title: "Talky-Chat App",
+    description: "Cross-platform chat app using Flutter and Firebase with real-time messaging, authentication, and global chat rooms.",
+    image: projectImage4, tags: ["Dart", "Flutter", "Firebase"],
+    codeLink: "https://github.com/DavidSovan/Talky-Chat-App-", category: "fullstack",
+  },
+  {
+    id: 6, title: "Cineverse-Movie App",
+    description: "Flutter app integrated with TMDB API to display popular, upcoming, and genre-based movies with search and ratings.",
+    image: projectImage5, tags: ["Dart", "Flutter", "API Integration"],
+    codeLink: "https://github.com/DavidSovan/Cineverse-movie-app-", category: "mobile",
+  },
+  {
+    id: 7, title: "Uber Taxi App",
+    description: "Full-stack Flutter & Laravel app with role-based access for customers and drivers, RESTful APIs, and ride booking.",
+    image: projectImage6, tags: ["Dart", "Flutter", "Laravel", "MySQL"],
+    codeLink: "https://github.com/DavidSovan/Uber-App", category: "fullstack",
+  },
+  {
+    id: 8, title: "POS System",
+    description: "POS and Inventory Management System with secure user management, real-time tracking, sales processing, and reporting.",
+    image: projectImage7, tags: ["PHP", "Laravel", "MySQL"],
+    codeLink: "https://github.com/DavidSovan/POS-system-backend", category: "backend",
+  },
+];
 
 function TiltCard({ children, className, prefersReducedMotion }) {
   const [rotateX, setRotateX] = useState(0);
@@ -49,17 +100,8 @@ function TiltCard({ children, className, prefersReducedMotion }) {
 
 function Projects() {
   const [activeFilter, setActiveFilter] = useState("all");
-  const [selectedProject, setSelectedProject] = useState(null);
   const prefersReducedMotion = useReducedMotion();
-
-  const handleClose = useCallback(() => setSelectedProject(null), []);
-
-  useEffect(() => {
-    if (!selectedProject) return;
-    const onKey = (e) => { if (e.key === "Escape") handleClose(); };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [selectedProject, handleClose]);
+  const navigate = useNavigate();
 
   const categories = [
     { id: "all", label: "All" },
@@ -69,56 +111,7 @@ function Projects() {
     { id: "mobile", label: "Mobile" },
   ];
 
-  const projects = [
-    {
-      id: 1, title: "Portfolio Website",
-      description: "A personal portfolio website built with React and Tailwind CSS to showcase my projects and skills.",
-      image: projectImage, tags: ["React", "Tailwind CSS", "Responsive Design"],
-      codeLink: "https://github.com/DavidSovan/Portfolio", category: "frontend",
-    },
-    {
-      id: 2, title: "Task Manager App",
-      description: "Cross-platform mobile app to organize, track, and manage daily tasks efficiently. Flutter frontend with PHP/MySQL backend.",
-      image: projectImage1, tags: ["Flutter", "Dart", "PHP", "MySQL"],
-      codeLink: "https://github.com/DavidSovan/Task-Manager-App", category: "fullstack",
-    },
-    {
-      id: 3, title: "Static E-commerce App",
-      description: "A static e-commerce app built with Flutter, featuring product listings and a shopping cart.",
-      image: projectImage2, tags: ["Dart", "Flutter"],
-      codeLink: "https://github.com/DavidSovan/Static-Ecommerce-app", category: "mobile",
-    },
-    {
-      id: 4, title: "E-commerce UI Design",
-      description: "E-commerce UI design built with HTML and CSS for a responsive and modern shopping experience.",
-      image: projectImage3, tags: ["HTML", "CSS", "Responsive Design"],
-      codeLink: "https://github.com/DavidSovan/E-commerce_UI", category: "frontend",
-    },
-    {
-      id: 5, title: "Talky-Chat App",
-      description: "Cross-platform chat app using Flutter and Firebase with real-time messaging, authentication, and global chat rooms.",
-      image: projectImage4, tags: ["Dart", "Flutter", "Firebase"],
-      codeLink: "https://github.com/DavidSovan/Talky-Chat-App-", category: "fullstack",
-    },
-    {
-      id: 6, title: "Cineverse-Movie App",
-      description: "Flutter app integrated with TMDB API to display popular, upcoming, and genre-based movies with search and ratings.",
-      image: projectImage5, tags: ["Dart", "Flutter", "API Integration"],
-      codeLink: "https://github.com/DavidSovan/Cineverse-movie-app-", category: "mobile",
-    },
-    {
-      id: 7, title: "Uber Taxi App",
-      description: "Full-stack Flutter & Laravel app with role-based access for customers and drivers, RESTful APIs, and ride booking.",
-      image: projectImage6, tags: ["Dart", "Flutter", "Laravel", "MySQL"],
-      codeLink: "https://github.com/DavidSovan/Uber-App", category: "fullstack",
-    },
-    {
-      id: 8, title: "POS System",
-      description: "POS and Inventory Management System with secure user management, real-time tracking, sales processing, and reporting.",
-      image: projectImage7, tags: ["PHP", "Laravel", "MySQL"],
-      codeLink: "https://github.com/DavidSovan/POS-system-backend", category: "backend",
-    },
-  ];
+
 
   const filteredProjects = activeFilter === "all"
     ? projects
@@ -187,7 +180,7 @@ function Projects() {
                 >
                   <div
                     className="relative overflow-hidden aspect-[4/3] bg-[var(--theme-surface)]"
-                    onClick={() => setSelectedProject(project)}
+                    onClick={() => navigate(`/project/${project.id}`)}
                   >
                     <img
                       src={project.image}
@@ -262,67 +255,6 @@ function Projects() {
           </motion.a>
         </motion.div>
       </div>
-
-      {typeof document !== "undefined" && createPortal(
-        <AnimatePresence>
-          {selectedProject && (
-            <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--theme-bg)]/80 backdrop-blur-2xl"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              onClick={handleClose}
-            >
-              <motion.div
-                className="relative max-w-5xl w-full max-h-[90vh] flex flex-col glass rounded-3xl overflow-hidden border border-[var(--theme-border)] shadow-2xl"
-                initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  onClick={handleClose}
-                  className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-black/20 text-white hover:bg-black/40 backdrop-blur-md transition-colors z-10"
-                  aria-label="Close"
-                >
-                  &times;
-                </button>
-                <div className="overflow-y-auto w-full max-h-[90vh]">
-                  <img
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    className="w-full h-auto object-cover"
-                  />
-                  <div className="p-8 md:p-12 bg-[var(--theme-bg)]">
-                    <h3 className="text-3xl font-bold tracking-tight text-[var(--theme-text-heading)] mb-4">{selectedProject.title}</h3>
-                    <p className="text-[var(--theme-text-muted)] text-lg leading-relaxed mb-8 max-w-3xl">
-                      {selectedProject.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {selectedProject.tags.map((tag, i) => (
-                        <span key={i} className="px-4 py-1.5 text-sm font-medium rounded-full bg-[var(--theme-surface)] text-[var(--theme-text-secondary)] border border-[var(--theme-border)]">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <a
-                      href={selectedProject.codeLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 rounded-full bg-[var(--theme-text-heading)] text-[var(--theme-bg)] font-medium transition-transform hover:scale-105"
-                    >
-                      View Source Code
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body
-      )}
     </motion.section>
   );
 }
