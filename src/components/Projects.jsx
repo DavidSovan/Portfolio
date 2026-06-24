@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import projectImage from "../assets/Projects/Portfolio.png";
 import projectImage1 from "../assets/Projects/TaskApp.jpg";
-import projectImage2 from "../assets/Projects/ecom_demo.png";
+import projectImage2 from "../assets/Projects/Pro-ecom.png";
 import projectImage3 from "../assets/Projects/Project1.png";
-import projectImage4 from "../assets/Projects/chat_app.png";
+import projectImage4 from "../assets/Projects/Pro-talky.png";
 import projectImage5 from "../assets/Projects/Pro-cine.png";
-import projectImage6 from "../assets/Projects/uber_taxi.png";
+import projectImage6 from "../assets/Projects/Pro-uber.png";
 import projectImage7 from "../assets/Projects/API.png";
 
 export const projects = [

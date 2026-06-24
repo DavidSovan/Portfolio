@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import logo from "../assets/logo.png";
 
 function Preloader({ onComplete }) {
   const [progress, setProgress] = useState(0);
@@ -31,11 +32,20 @@ function Preloader({ onComplete }) {
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.05),transparent_50%)] pointer-events-none" />
       <div className="relative flex flex-col items-center z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="mb-8"
+        >
+          <img src={logo} alt="Logo" className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]" />
+        </motion.div>
+
         <motion.div 
-          className="text-7xl md:text-9xl font-bold text-white tabular-nums tracking-tighter"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+          className="text-5xl md:text-7xl font-bold text-white tabular-nums tracking-tighter"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
           {progress}%
         </motion.div>

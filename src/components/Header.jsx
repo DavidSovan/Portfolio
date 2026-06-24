@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useTheme } from "../ThemeContext";
+import logo from "../assets/logo.png";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,10 +68,12 @@ function Header() {
         style={{ opacity: headerOpacity }}
       />
 
-      <a href="#home" className="relative flex items-center space-x-2 group z-10">
-        <div className="w-8 h-8 rounded-full bg-[var(--theme-text-heading)] flex items-center justify-center text-[var(--theme-bg)] font-bold text-sm transition-transform duration-500 group-hover:scale-105">
-          D
-        </div>
+      <a href="#home" className="relative flex items-center space-x-3 group z-10">
+        <img 
+          src={logo} 
+          alt="Logo" 
+          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
         <h1 className="text-lg font-semibold tracking-tight text-[var(--theme-text-heading)]">
           David
         </h1>

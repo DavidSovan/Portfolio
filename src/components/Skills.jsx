@@ -82,6 +82,7 @@ function SkillCard({ skill, prefersReducedMotion }) {
         rotateX: prefersReducedMotion ? 0 : rotateX,
         rotateY: prefersReducedMotion ? 0 : rotateY,
         transformStyle: "preserve-3d",
+        willChange: "transform",
       }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
       whileHover={prefersReducedMotion ? {} : { scale: 1.04, zIndex: 10 }}
@@ -153,18 +154,19 @@ function Skills() {
     <section id="skills" className="relative w-full py-32 px-6 min-h-screen overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}></div>
         {!prefersReducedMotion && (
           <>
             <motion.div 
               className="absolute top-1/4 left-1/4 w-[40rem] h-[40rem] bg-blue-500/10 rounded-full blur-[100px]"
               animate={{ x: [0, 50, 0], y: [0, 50, 0], scale: [1, 1.1, 1] }}
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              style={{ willChange: "transform" }}
             />
             <motion.div 
               className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-purple-500/10 rounded-full blur-[80px]"
               animate={{ x: [0, -40, 0], y: [0, -40, 0], scale: [1, 1.2, 1] }}
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+              style={{ willChange: "transform" }}
             />
           </>
         )}
