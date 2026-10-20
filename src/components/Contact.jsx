@@ -155,11 +155,11 @@ function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-[var(--theme-text-muted)] mb-2 ml-1">Name</label>
-                  <input id="name" name="name" type="text" required value={formData.name} onChange={handleChange} className={inputClass} placeholder="John Doe" />
+                  <input id="name" name="name" type="text" required value={formData.name} onChange={handleChange} className={inputClass} placeholder="David Sovan" />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-[var(--theme-text-muted)] mb-2 ml-1">Email</label>
-                  <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="john@example.com" />
+                  <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="david@example.com" />
                 </div>
               </div>
               <div>

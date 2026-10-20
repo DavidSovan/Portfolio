@@ -73,8 +73,12 @@ function CaseStudy() {
             </header>
 
             <main className="max-w-4xl mx-auto p-8 md:p-24">
-              <div className="mb-16 rounded-3xl overflow-hidden border border-[var(--theme-border)] shadow-2xl glass">
-                <img src={project.image} alt={project.title} className="w-full h-auto object-cover" />
+              <div className="space-y-8 mb-16">
+                {(project.images && project.images.length > 0 ? project.images : [project.image]).map((img, idx) => (
+                  <div key={idx} className="rounded-3xl overflow-hidden border border-[var(--theme-border)] shadow-2xl glass">
+                    <img src={img} alt={`${project.title} screenshot ${idx + 1}`} className="w-full h-auto object-cover" />
+                  </div>
+                ))}
               </div>
 
               <section className="mb-16">

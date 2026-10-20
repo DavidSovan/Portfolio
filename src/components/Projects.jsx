@@ -4,11 +4,12 @@ import { motion, useReducedMotion } from "framer-motion";
 import projectImage from "../assets/Projects/Portfolio.png";
 import projectImage1 from "../assets/Projects/TaskApp.jpg";
 import projectImage2 from "../assets/Projects/Pro-ecom.png";
-import projectImage3 from "../assets/Projects/Project1.png";
 import projectImage4 from "../assets/Projects/Pro-talky.png";
 import projectImage5 from "../assets/Projects/Pro-cine.png";
 import projectImage6 from "../assets/Projects/Pro-uber.png";
 import projectImage7 from "../assets/Projects/API.png";
+import projectImage8 from "../assets/Projects/ecommerce11.png";
+import projectImage8_2 from "../assets/Projects/ecommerce12.png";
 
 export const projects = [
   {
@@ -28,12 +29,6 @@ export const projects = [
     description: "A static e-commerce app built with Flutter, featuring product listings and a shopping cart.",
     image: projectImage2, tags: ["Dart", "Flutter"],
     codeLink: "https://github.com/DavidSovan/Static-Ecommerce-app", category: "mobile",
-  },
-  {
-    id: 4, title: "E-commerce UI Design",
-    description: "E-commerce UI design built with HTML and CSS for a responsive and modern shopping experience.",
-    image: projectImage3, tags: ["HTML", "CSS", "Responsive Design"],
-    codeLink: "https://github.com/DavidSovan/E-commerce_UI", category: "frontend",
   },
   {
     id: 5, title: "Talky-Chat App",
@@ -58,6 +53,15 @@ export const projects = [
     description: "POS and Inventory Management System with secure user management, real-time tracking, sales processing, and reporting.",
     image: projectImage7, tags: ["PHP", "Laravel", "MySQL"],
     codeLink: "https://github.com/DavidSovan/POS-system-backend", category: "backend",
+  },
+  {
+    id: 9, title: "Customizable E-Commerce",
+    description: "Modular e-commerce platform with dynamic storefront theming, real-time order tracking, Bakong KHQR payments, and dedicated admin/driver portals.",
+    image: projectImage8,
+    images: [projectImage8, projectImage8_2],
+    tags: ["FastAPI", "Python", "React", "Vite", "Tailwind CSS", "MySQL", "SQLAlchemy", "WebSockets", "JWT", "Bakong KHQR", "Leaflet", "Axios"],
+    codeLink: "https://github.com/DavidSovan/Customizable_E-Commerce",
+    category: "fullstack",
   },
 ];
 

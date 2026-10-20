@@ -1,16 +1,18 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 const responsibilities = [
-  "Analyze and document existing business processes.",
+  "Analyze and document existing business processes and workflows.",
   "Identify inefficiencies, bottlenecks, and improvement opportunities.",
+  "Perform functional and QA testing across web and mobile applications.",
   "Design and recommend optimized workflow solutions.",
-  "Coordinate with developers, QA teams, and stakeholders.",
+  "Coordinate with developers, designers, and stakeholders.",
   "Support UAT (User Acceptance Testing) and system validation.",
   "Improve operational efficiency and reduce manual work.",
 ];
 
 const skills = [
   "Process Analysis",
+  "Web & Mobile Testing",
   "Workflow Optimization",
   "Requirements Gathering",
   "Documentation",
@@ -68,21 +70,21 @@ function Experience() {
                     Process Analyst
                   </h3>
                   <p className="text-[var(--theme-text-secondary)] font-medium text-lg">
-                    Meta Tower
+                    Media Outlet
                   </p>
                 </div>
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-[var(--theme-border)] text-sm font-medium text-[var(--theme-text-secondary)] flex-shrink-0">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                  Jan 2024 - Present
+                  Jan 2026 - Present
                 </div>
               </div>
 
               <div className="space-y-6 text-[var(--theme-text-muted)] text-base md:text-lg leading-relaxed relative z-10 font-light">
                 <p>
-                  As a Process Analyst, I focused on analyzing and refining business workflows to eliminate bottlenecks and enhance operational efficiency. By mapping out existing processes, I identified critical gaps and designed optimized solutions that significantly improved performance.
+                  As a Process Analyst at Media Outlet, I focus on analyzing and refining business workflows to eliminate bottlenecks and enhance operational efficiency. Alongside process optimization, I actively conduct testing across web and mobile applications to ensure seamless user experiences and software reliability.
                 </p>
                 <p>
-                  I collaborated closely with engineering and cross-functional teams, translating complex business requirements into clear, actionable technical documentation. My role involved supporting system testing, validating process changes, and ensuring the smooth deployment of workflow enhancements that reduced manual effort and improved cross-team communication.
+                  I collaborate closely with engineering and cross-functional teams, translating complex business requirements into clear technical documentation, executing test cases, and supporting UAT (User Acceptance Testing) to ensure smooth deployments and high quality standards.
                 </p>
               </div>
 
