@@ -1,67 +1,29 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import projectImage from "../assets/Projects/Portfolio.png";
-import projectImage1 from "../assets/Projects/TaskApp.jpg";
-import projectImage2 from "../assets/Projects/Pro-ecom.png";
-import projectImage4 from "../assets/Projects/Pro-talky.png";
-import projectImage5 from "../assets/Projects/Pro-cine.png";
-import projectImage6 from "../assets/Projects/Pro-uber.png";
-import projectImage7 from "../assets/Projects/API.png";
-import projectImage8 from "../assets/Projects/ecommerce11.png";
-import projectImage8_2 from "../assets/Projects/ecommerce12.png";
+import cineverseImage from "../assets/Projects/Pro-cine.png";
+import ecommerceImage1 from "../assets/Projects/ecommerce11.png";
+import ecommerceImage2 from "../assets/Projects/ecommerce12.png";
 
 export const projects = [
   {
-    id: 1, title: "Portfolio Website",
-    description: "A personal portfolio website built with React and Tailwind CSS to showcase my projects and skills.",
-    image: projectImage, tags: ["React", "Tailwind CSS", "Responsive Design"],
-    codeLink: "https://github.com/DavidSovan/Portfolio", category: "frontend",
-  },
-  {
-    id: 2, title: "Task Manager App",
-    description: "Cross-platform mobile app to organize, track, and manage daily tasks efficiently. Flutter frontend with PHP/MySQL backend.",
-    image: projectImage1, tags: ["Flutter", "Dart", "PHP", "MySQL"],
-    codeLink: "https://github.com/DavidSovan/Task-Manager-App", category: "fullstack",
-  },
-  {
-    id: 3, title: "Static E-commerce App",
-    description: "A static e-commerce app built with Flutter, featuring product listings and a shopping cart.",
-    image: projectImage2, tags: ["Dart", "Flutter"],
-    codeLink: "https://github.com/DavidSovan/Static-Ecommerce-app", category: "mobile",
-  },
-  {
-    id: 5, title: "Talky-Chat App",
-    description: "Cross-platform chat app using Flutter and Firebase with real-time messaging, authentication, and global chat rooms.",
-    image: projectImage4, tags: ["Dart", "Flutter", "Firebase"],
-    codeLink: "https://github.com/DavidSovan/Talky-Chat-App-", category: "fullstack",
-  },
-  {
-    id: 6, title: "Cineverse-Movie App",
-    description: "Flutter app integrated with TMDB API to display popular, upcoming, and genre-based movies with search and ratings.",
-    image: projectImage5, tags: ["Dart", "Flutter", "API Integration"],
-    codeLink: "https://github.com/DavidSovan/Cineverse-movie-app-", category: "mobile",
-  },
-  {
-    id: 7, title: "Uber Taxi App",
-    description: "Full-stack Flutter & Laravel app with role-based access for customers and drivers, RESTful APIs, and ride booking.",
-    image: projectImage6, tags: ["Dart", "Flutter", "Laravel", "MySQL"],
-    codeLink: "https://github.com/DavidSovan/Uber-App", category: "fullstack",
-  },
-  {
-    id: 8, title: "POS System",
-    description: "POS and Inventory Management System with secure user management, real-time tracking, sales processing, and reporting.",
-    image: projectImage7, tags: ["PHP", "Laravel", "MySQL"],
-    codeLink: "https://github.com/DavidSovan/POS-system-backend", category: "backend",
-  },
-  {
-    id: 9, title: "Customizable E-Commerce",
+    id: 1,
+    title: "Customizable E-Commerce",
     description: "Modular e-commerce platform with dynamic storefront theming, real-time order tracking, Bakong KHQR payments, and dedicated admin/driver portals.",
-    image: projectImage8,
-    images: [projectImage8, projectImage8_2],
+    image: ecommerceImage1,
+    images: [ecommerceImage1, ecommerceImage2],
     tags: ["FastAPI", "Python", "React", "Vite", "Tailwind CSS", "MySQL", "SQLAlchemy", "WebSockets", "JWT", "Bakong KHQR", "Leaflet", "Axios"],
     codeLink: "https://github.com/DavidSovan/Customizable_E-Commerce",
     category: "fullstack",
+  },
+  {
+    id: 2,
+    title: "Cineverse-Movie App",
+    description: "Flutter app integrated with TMDB API to display popular, upcoming, and genre-based movies with search and ratings.",
+    image: cineverseImage,
+    tags: ["Dart", "Flutter", "API Integration"],
+    codeLink: "https://github.com/DavidSovan/Cineverse-movie-app-",
+    category: "mobile",
   },
 ];
 
@@ -107,13 +69,14 @@ function Projects() {
   const prefersReducedMotion = useReducedMotion();
   const navigate = useNavigate();
 
+  const availableCategories = new Set(projects.map((p) => p.category));
   const categories = [
     { id: "all", label: "All" },
-    { id: "frontend", label: "Frontend" },
-    { id: "backend", label: "Backend" },
     { id: "fullstack", label: "Full-Stack" },
     { id: "mobile", label: "Mobile" },
-  ];
+    { id: "frontend", label: "Frontend" },
+    { id: "backend", label: "Backend" },
+  ].filter((c) => c.id === "all" || availableCategories.has(c.id));
 
 
 
